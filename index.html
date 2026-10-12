@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AiAllDesk | L’IA prépare votre travail de bureau, vous validez</title>
+<meta name="description" content="Automatisation par IA pour les PME du Luxembourg : factures, documents, réponses, relances. L’IA prépare, une personne valide. Audit gratuit d’une heure.">
+<meta property="og:title" content="AiAllDesk | L’IA prépare votre travail de bureau, vous validez">
+<meta property="og:description" content="Automatisation par IA pour les PME du Luxembourg : factures, documents, réponses, relances. L’IA prépare, une personne valide. Audit gratuit d’une heure.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_LU">
+<style>html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<style>
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(polices/e2661bcc0d77.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400 600; font-stretch: 100%; font-display: swap; src: url(polices/868a235a9c8b.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(polices/f24c3215230a.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+/* Composition : un cadre peint en ouverture (le tri du courrier), puis des sections de lecture alignées à gauche.
+   Les écrans d'exemple et les deux cadres peints restent sombres dans toutes les ambiances. Une teinte par pôle. */
+:root{color-scheme:light;
+  --fond:#eef2f5;--surface:#ffffff;--surface-2:#dfe7ee;--trait:#c6d1db;--texte:#101820;--doux:#4a5967;
+  --cta:#101820;--cta-survol:#2a3a4c;--sur-cta:#ffffff;--c-etiq:#4a5967;
+  --p-fact:#775600;--p-docs:#17694a;--p-rep:#2553ba;--p-vente:#43600e;--p-mkt:#a02f63;--p-recr:#6247c4}
+:root{
+  --e-fond:#0c121a;--e-surface:#182533;--e-surface-2:#22344a;--e-trait:#30445a;--e-texte:#f3f1ec;--e-doux:#a9b8c4;
+  --e-fact:#e6c264;--e-docs:#7fcbab;--e-rep:#8fb4ff;--e-vente:#b7d77a;--e-mkt:#ee9bbd;--e-recr:#b9a6f0;
+  --peche:#f7b092;--peche-survol:#ffc6ad;--sur-peche:#1d1209;
+  --titre:"Newsreader",Georgia,"Times New Roman",serif;
+  --corps:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --etiq:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --t1:13px;--t2:15px;--t3:17px;--t4:21px;--t5:28px;--t6:36px;--t7:clamp(34px,5.1vw,58px);
+  --r1:6px;--r2:12px;--r3:18px;
+  scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+*{box-sizing:border-box}
+body{background:var(--fond);color:var(--texte);font-family:var(--corps);font-size:var(--t3);line-height:1.55;padding-inline:16px;padding-block:0 40px;overflow-x:clip}
+.page{max-width:1180px;margin-inline:auto}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--cta);outline-offset:3px;border-radius:var(--r1)}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+h1,h2,h3{font-family:var(--titre);font-weight:500;letter-spacing:-.012em;text-wrap:balance}
+h1{font-size:var(--t7);line-height:1.06}
+h2{font-size:var(--t6);line-height:1.12}
+h3{font-size:var(--t5);line-height:1.16}
+.deux span{display:block}
+.etiq{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase;color:var(--c-etiq)}
+.source{font-size:var(--t1);color:var(--doux)}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.saut{position:absolute;left:-999px}
+.saut:focus{left:16px;top:16px;z-index:50;background:var(--surface);padding:10px 14px}
+.sombre{--fond:var(--e-fond);--surface:var(--e-surface);--surface-2:var(--e-surface-2);--trait:var(--e-trait);--texte:var(--e-texte);--doux:var(--e-doux);--cta:var(--peche);--cta-survol:var(--peche-survol);--sur-cta:var(--sur-peche);--c-etiq:var(--peche);color:var(--texte)}
+
+/* Boutons et liens : chacun réagit au survol et à l'appui */
+.bouton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;color:var(--texte);font-weight:500;font-size:var(--t3);text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+.bouton:hover{background:var(--surface-2);border-color:var(--doux)}
+.bouton:active{transform:translateY(1px)}
+.bouton.plein{background:var(--cta);border-color:var(--cta);color:var(--sur-cta)}
+.bouton.plein:hover{background:var(--cta-survol);border-color:var(--cta-survol)}
+.bouton.petit{min-height:40px;padding:7px 15px;font-size:var(--t2)}
+.lien{font-weight:500;text-underline-offset:4px;text-decoration-thickness:1px}
+.lien:hover{text-decoration-thickness:2px}
+
+/* Menu : il suit la lecture */
+.menu{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px 24px;padding-block:10px;background:var(--fond);border-bottom:1px solid var(--trait);box-shadow:0 0 0 100vmax var(--fond);clip-path:inset(0 -100vmax)}
+.marque{display:flex;align-items:center;gap:10px;font-weight:600;font-size:var(--t4);text-decoration:none}
+.menu nav{display:flex;gap:6px 24px;font-size:var(--t2)}
+.menu nav a{text-decoration:none;padding:8px 2px;border-bottom:1px solid transparent;transition:border-color .15s}
+.menu nav a:hover{border-bottom-color:currentColor}
+
+/* Haut de page : le cadre peint */
+.haut{position:relative;z-index:1;margin-top:14px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding-bottom:clamp(150px,15vw,178px)}
+.haut .fond,.fin .fond{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.haut .fond{object-position:62% 100%;opacity:.85}
+.haut .voile{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,12,18,.58) 0%,rgba(8,12,18,.16) 46%,rgba(8,12,18,0) 100%)}
+.accroche{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;padding:46px 20px 30px}
+.accroche .sous{max-width:62ch;font-size:var(--t4);line-height:1.45;text-wrap:pretty}
+.boutons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:4px}
+.haut .bouton:not(.plein){background:rgba(12,18,26,.55);border-color:rgba(243,241,236,.45)}
+.haut .bouton:not(.plein):hover{background:rgba(12,18,26,.85);border-color:var(--texte)}
+.accroche .note{font-size:var(--t2)}
+.accroche .note b{color:var(--peche);font-weight:600}
+
+/* L'écran d'exemple : trois messages, trois réponses préparées, et c'est le visiteur qui valide */
+.ecran{position:relative;width:min(100% - 32px,940px);margin-inline:auto;background:rgba(12,18,26,.96);border:1px solid var(--trait);border-radius:var(--r2);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.75);--pc:var(--e-rep);text-align:left}
+.e-barre{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;padding:11px 16px;border-bottom:1px solid var(--trait);font-size:var(--t2);color:var(--doux)}
+.e-barre b{color:var(--texte);font-weight:500}
+.ex{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--doux);border-radius:var(--r1);padding:0 7px;margin-left:8px;color:var(--doux)}
+.e-corps{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.4fr)}
+.e-liste{display:flex;flex-direction:column;gap:8px;padding:14px;border-right:1px solid var(--trait)}
+.e-mail{width:100%;text-align:left;display:grid;gap:2px;padding:10px 12px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface);font-size:var(--t2);transition:border-color .15s,background .15s}
+.e-mail:hover{background:var(--surface-2)}
+.e-mail[aria-current="true"]{border-color:var(--pc)}
+.e-mail strong{font-weight:500}
+.e-mail span{color:var(--doux)}
+.e-mail em{font-style:normal;font-size:var(--t1);color:var(--pc)}
+.e-mail.fait em{color:var(--doux)}
+.e-detail{display:flex;flex-direction:column;gap:12px;padding:16px 18px;min-width:0}
+.e-entete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;font-weight:500}
+.e-entete small{font-weight:400;color:var(--doux);font-size:var(--t1)}
+.e-msg{font-size:var(--t2)}
+.puces{display:flex;flex-wrap:wrap;gap:6px}
+.puce{font-size:var(--t1);border:1px solid var(--pc);border-radius:var(--r1);padding:2px 8px;background:var(--surface-2);background:color-mix(in srgb,var(--pc) 16%,transparent)}
+.e-reponse{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface)}
+.e-reponse>.etiq{color:var(--doux)}
+.e-reponse p{font-size:var(--t2)}
+.pj{font-family:var(--etiq);font-size:var(--t1);color:var(--doux)}
+.e-actions,.t-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;min-height:40px}
+.valider{min-height:40px;padding:7px 16px;border-radius:var(--r1);border:1px solid var(--pc);background:var(--pc);color:var(--e-fond);font-weight:600;font-size:var(--t2);transition:filter .15s,transform .1s}
+.valider:hover{filter:brightness(1.14)}
+.valider:active{transform:translateY(1px)}
+.etat{font-size:var(--t2);color:var(--doux)}
+.envoye .etat{color:var(--pc)}
+.e-fin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 16px;border-top:1px solid var(--trait);font-size:var(--t2)}
+.rejouer{min-height:40px;padding:7px 14px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;font-size:var(--t2);transition:background .15s,border-color .15s}
+.rejouer:hover{background:var(--surface-2);border-color:var(--doux)}
+.liens-poles{position:relative;width:max-content;max-width:calc(100% - 32px);margin:-22px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--trait);border-radius:var(--r2);box-shadow:0 14px 34px -14px rgba(0,0,0,.7)}
+.liens-poles a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 13px;border-radius:var(--r1);text-decoration:none;font-size:var(--t2);transition:background .15s}
+.liens-poles a:hover{background:var(--surface-2)}
+.liens-poles .ico{color:var(--pc)}
+
+/* Sections de lecture */
+.bloc{padding-block:88px 0;display:flex;flex-direction:column;gap:32px;scroll-margin-top:64px}
+.tete{display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.tete p:not(.etiq){color:var(--doux)}
+
+/* Les six pôles */
+.poles{position:relative}
+.pole{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px 64px;align-items:start;padding-block:56px;border-top:1px solid var(--trait);scroll-margin-top:64px}
+.poles[data-mode="file"] .pole:nth-of-type(even) .texte{order:2}
+.pole .texte{display:flex;flex-direction:column;gap:16px;min-width:0}
+.pole .etiq{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--pc);padding:5px 10px;border-radius:var(--r1);background:var(--surface);background:color-mix(in srgb,var(--pc) 14%,transparent)}
+.pole .etiq .ico{width:16px;height:16px}
+.pole .texte>p:not(.etiq){color:var(--doux);max-width:54ch}
+.chiffres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px;margin-top:6px}
+.chiffres li{display:flex;flex-direction:column;gap:5px;border-top:1px solid var(--trait);padding-top:14px}
+.chiffres strong{font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1;color:var(--pc);font-variant-numeric:tabular-nums}
+.chiffres span{font-size:var(--t2)}
+.pole .lien{align-self:flex-start;font-size:var(--t2)}
+
+/* Le trajet d'un pôle : cinq étapes cliquables ; l'IA avance seule jusqu'à l'étape où une personne valide */
+.trajet{--pc:var(--pe);display:flex;flex-direction:column;gap:16px;padding:18px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);min-width:0}
+.t-etapes{display:flex;gap:6px}
+.t-etapes li{flex:1 1 auto;min-width:0}
+.t-etapes button{width:100%;height:100%;display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--trait);border-radius:var(--r1);background:transparent;color:var(--doux);font-size:var(--t1);line-height:1.25;text-align:left;transition:border-color .15s,color .15s,background .15s}
+.t-etapes button:hover{border-color:var(--doux);color:var(--texte)}
+.t-etapes b{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;font-weight:500}
+.t-etapes .fait button{color:var(--texte)}
+.t-etapes .fait b{background:var(--pc);border-color:var(--pc);color:var(--e-fond)}
+.t-etapes .ici button{color:var(--texte);border-color:var(--pc);background:var(--surface);background:color-mix(in srgb,var(--pc) 16%,transparent)}
+.t-carte{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:var(--r1);background:var(--surface);min-height:188px;font-size:var(--t2)}
+.t-carte [data-de]{opacity:.42;transition:opacity .4s}
+.t-carte [data-de].vu{opacity:1}
+.t-carte b{font-weight:500}
+.t-carte q{quotes:"«\00a0" "\00a0»";color:var(--doux)}
+.t-carte .fichier{font-family:var(--etiq);font-size:var(--t1);overflow-wrap:anywhere}
+.t-carte .visuel{height:54px;border-radius:var(--r1);background:linear-gradient(135deg,var(--pc),var(--surface-2))}
+.t-phrase{font-size:var(--t4);line-height:1.35;min-height:2.7em;text-wrap:pretty}
+
+/* Le rail : sur grand écran seulement, il part du bâtiment et se remplit à mesure qu'on descend */
+.rail,.coude,.raccord,.noeud{display:none}
+@media (min-width:1320px){
+  .poles[data-mode="file"] .raccord{display:block;position:absolute;left:-24px;right:5%;top:0;height:44px;border:0 solid var(--trait);border-bottom-width:4px;border-right-width:4px;border-bottom-right-radius:18px}
+  .poles[data-mode="file"] .coude{display:block;position:absolute;left:-46px;top:40px;width:24px;height:24px;border:0 solid var(--trait);border-top-width:4px;border-left-width:4px;border-top-left-radius:18px}
+  .poles[data-mode="file"] .rail{display:block;position:absolute;left:-46px;top:62px;bottom:0;width:4px;border-radius:2px;background:var(--trait);overflow:hidden}
+  .rail i{display:block;width:100%;height:0;background:var(--doux)}
+  .poles[data-mode="file"] .noeud{display:grid;place-items:center;position:absolute;left:-63px;top:52px;width:38px;height:38px;border-radius:var(--r2);background:var(--fond);border:2px solid var(--trait);color:var(--doux);transition:border-color .3s,color .3s}
+  .poles[data-mode="file"] .pole.passe .noeud{border-color:var(--pc);color:var(--pc)}
+  .poles[data-mode="file"] .pole .etiq .ico{display:none}
+}
+
+/* Variante « un pôle à la fois » : de vrais onglets */
+.onglets{display:flex;flex-wrap:wrap;gap:6px}
+.onglets button{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid var(--trait);border-radius:var(--r1);background:transparent;font-size:var(--t2);color:var(--doux);transition:border-color .15s,color .15s,background .15s}
+.onglets button:hover{color:var(--texte);border-color:var(--doux)}
+.onglets button[aria-selected="true"]{color:var(--texte);border-color:var(--pc);box-shadow:inset 0 -3px 0 var(--pc);background:var(--surface)}
+.onglets .ico{color:var(--pc)}
+.poles[data-mode="onglets"] .pole{border-top:0;padding-block:8px 0}
+
+/* Les chiffres : un simulateur, un seul grand nombre */
+.simu{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px 56px;align-items:start}
+.reglages{display:flex;flex-direction:column;gap:14px}
+.reglage{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:4px 14px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--trait)}
+.reglage input{width:100%;min-height:42px;padding:6px 10px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface);font-variant-numeric:tabular-nums;text-align:right;transition:border-color .15s}
+.reglage input:hover{border-color:var(--doux)}
+.reglage small{grid-column:1/-1;font-size:var(--t1);color:var(--doux)}
+.resultat{display:flex;flex-direction:column;gap:18px}
+.gros{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.gros strong{font-family:var(--titre);font-weight:500;font-size:var(--t7);line-height:.95;font-variant-numeric:tabular-nums}
+.gros span{font-size:var(--t4);max-width:22ch;line-height:1.25}
+.resultat>p{color:var(--doux)}
+.resultat>p b{color:var(--texte);font-weight:600;font-variant-numeric:tabular-nums}
+.cases{display:grid;grid-template-rows:repeat(5,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px}
+.cases i{aspect-ratio:1;background:var(--surface-2)}
+.cases .l0,.legende .l0{background:var(--p-rep)}
+.cases .l1,.legende .l1{background:var(--p-vente)}
+.cases .l2,.legende .l2{background:var(--p-recr)}
+.cases .l3,.legende .l3{background:var(--p-mkt)}
+.legende{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:var(--t2)}
+.legende li{display:flex;align-items:center;gap:8px}
+.legende i{width:12px;height:12px;flex:none}
+.legende b{font-weight:500;font-variant-numeric:tabular-nums}
+.mention{font-size:var(--t1);color:var(--doux);max-width:90ch}
+
+/* Comment ça se passe */
+.marche{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.marche li{display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--texte);padding-top:14px}
+.marche b{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;color:var(--doux);font-weight:400}
+.marche h3{font-size:var(--t4)}
+.marche p{font-size:var(--t2);color:var(--doux)}
+.prix{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 32px;align-items:center;padding:22px 24px;border-radius:var(--r2);background:var(--surface)}
+.prix h3{font-size:var(--t4);margin-bottom:6px}
+.prix p{font-size:var(--t2);color:var(--doux);max-width:75ch}
+
+/* Vos données, et qui est derrière */
+.duo{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px 56px;align-items:start}
+.engagements{display:flex;flex-direction:column;gap:18px}
+.engagements li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px}
+.engagements .ico{color:var(--doux);margin-top:3px}
+.engagements b{font-weight:600}
+.engagements p{grid-column:2;color:var(--doux);font-size:var(--t2)}
+.qui{display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--r2);background:var(--surface)}
+.qui h3{font-size:var(--t4)}
+.qui p:not(.etiq){font-size:var(--t2);color:var(--doux)}
+.parcours{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.parcours li{font-size:var(--t2);color:var(--doux);padding-top:10px;border-top:1px solid var(--trait)}
+.parcours b{color:var(--texte);font-weight:600}
+
+/* Fin de page : la peinture revient, on arrive au bâtiment */
+.fin{position:relative;margin-top:88px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding:64px clamp(20px,5vw,64px);display:flex;flex-direction:column;align-items:flex-start;gap:18px;scroll-margin-top:72px}
+.fin .fond{object-position:100% 100%;opacity:.9}
+.fin .voile{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,18,.95) 0%,rgba(8,12,18,.84) 46%,rgba(8,12,18,.12) 100%)}
+.fin>*:not(.fond):not(.voile){position:relative;max-width:560px}
+.fin>p{color:var(--doux)}
+.fin>.adresse{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:var(--t4);color:var(--texte)}
+#courriel{user-select:all;font-weight:500}
+#courriel.vide{border:1px dashed var(--doux);border-radius:var(--r1);padding:4px 12px;color:var(--doux);font-weight:400;user-select:auto}
+.assurances{display:flex;flex-direction:column;gap:6px;font-size:var(--t2);color:var(--doux)}
+.assurances li{display:flex;gap:8px;align-items:flex-start}
+.assurances .ico{width:18px;height:18px;margin-top:2px;color:var(--peche)}
+
+/* Les citations de Nils Davoine : la phrase de l'agence en petit et en retrait, la sienne en grand.
+   Deux habillages tirés de la peinture (le nuage, le ciel) et un habillage clair, sans image. */
+.citation{position:relative;overflow:hidden;margin:88px 0 0;border-radius:var(--r3);background:var(--fond);padding:clamp(40px,6.5vw,88px) clamp(20px,6vw,80px);display:flex;flex-direction:column}
+.citation .fond{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.citation .voile{position:absolute;inset:0}
+.citation>*:not(.fond):not(.voile){position:relative}
+.c-texte{display:flex;flex-direction:column;gap:22px;width:min(100%,700px)}
+.citation blockquote,.mot{margin:0;font-family:var(--titre);font-weight:500;letter-spacing:-.012em}
+.citation blockquote{font-size:var(--t7);line-height:1.08}
+.citation blockquote span,.mot span{display:block;text-wrap:balance}
+.citation .eux{font-size:.62em;line-height:1.2;font-weight:400;color:var(--doux);margin-bottom:.4em}
+.citation figcaption{font-size:var(--t2);color:var(--doux)}
+.citation figcaption b{color:var(--peche);font-weight:600}
+.c-nuage{align-items:flex-end}
+.c-nuage .fond{object-position:100% 40%;transform:scaleX(-1)}
+.c-nuage .voile{background:linear-gradient(270deg,rgba(8,12,18,.94) 0%,rgba(8,12,18,.8) 48%,rgba(8,12,18,.12) 100%)}
+.c-ciel .fond{object-position:0% 6%}
+.c-ciel .voile{background:linear-gradient(90deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.66) 55%,rgba(8,12,18,.2) 100%)}
+.c-clair{background:transparent;border-radius:0;overflow:visible;padding:56px 0;border-block:1px solid var(--trait)}
+.c-clair figcaption b{color:var(--texte)}
+.mot{font-size:var(--t5);line-height:1.14}
+.mot .eux{font-family:var(--corps);font-size:var(--t2);font-weight:400;letter-spacing:0;line-height:1.4;color:var(--doux);margin-bottom:6px}
+
+/* Pied de page */
+.pied{padding-block:40px 0;display:flex;flex-direction:column;gap:12px;font-size:var(--t2);color:var(--doux)}
+.pied strong{color:var(--texte);font-weight:600}
+.pied details{border-top:1px solid var(--trait);padding-top:12px}
+.pied summary{cursor:pointer;color:var(--texte);font-weight:500}
+.pied summary:hover{text-decoration:underline;text-underline-offset:4px}
+.pied details p{margin-top:8px;max-width:80ch}
+
+@media (max-width:1180px){
+  .t-etapes li{flex:none}
+  .t-etapes li.ici{flex:1 1 0}
+  .t-etapes li:not(.ici) span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+@media (max-width:900px){
+  .menu nav{display:none}
+  .citation{margin-top:60px}
+  .c-nuage{align-items:flex-start}
+  .c-nuage .voile,.c-ciel .voile{background:linear-gradient(180deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.82) 70%,rgba(8,12,18,.5) 100%)}
+  .c-clair{padding:40px 0}
+  .liens-poles{display:grid;grid-template-columns:repeat(3,auto);margin-top:14px}
+  .bloc{padding-block:60px 0;gap:26px}
+  .pole{grid-template-columns:minmax(0,1fr);padding-block:44px}
+  .poles[data-mode="file"] .pole:nth-of-type(even) .texte{order:0}
+  .simu,.duo,.prix{grid-template-columns:minmax(0,1fr)}
+  .marche{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fin{margin-top:60px;padding-block:48px 170px}
+  .fin .voile{background:linear-gradient(180deg,rgba(8,12,18,.95) 0%,rgba(8,12,18,.9) 66%,rgba(8,12,18,.1) 100%)}
+}
+@media (max-width:700px){
+  :root{--t4:19px;--t5:25px;--t6:30px}
+  .haut{padding-bottom:236px;background:linear-gradient(180deg,#0e2a40 0%,#1a4560 70%,#2b4a73 100%)}
+  .haut .fond{inset:auto 0 0 auto;width:175%;height:300px;object-position:100% 100%;opacity:1;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%)}
+  .haut .voile{background:linear-gradient(180deg,rgba(8,12,18,.45) 0%,rgba(8,12,18,0) 60%)}
+  .accroche{padding:34px 16px 24px}
+  .accroche .sous{font-size:var(--t3)}
+  .e-corps{grid-template-columns:minmax(0,1fr)}
+  .e-liste{display:none}
+  .liens-poles{width:auto;margin:14px 16px 0;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trajet{padding:14px}
+}
+@media (max-width:520px){
+  .chiffres,.marche{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:380px){
+  .accroche .etiq{letter-spacing:.04em}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-facture" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-dossier" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-vente" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+  <symbol id="i-marketing" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4z"/><path d="M17 9a4 4 0 0 1 0 6"/></symbol>
+  <symbol id="i-personne" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ecrit" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></symbol>
+  <symbol id="i-oeil" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>
+
+<div class="page" lang="fr">
+  <a class="saut" href="#contenu">Aller au contenu</a>
+
+  <header class="menu">
+    <a class="marque" href="#contenu" aria-label="AiAllDesk, haut de la page">
+      <svg width="30" height="29" viewBox="0 0 290 280" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M79 176V46a20 20 0 0 1 20-20h59l55 54v96z"/><path d="M158 26v44a10 10 0 0 0 10 10h45"/><rect x="24" y="200" width="242" height="58" rx="29" stroke-width="18"/></g><g fill="currentColor"><circle cx="78" cy="229" r="9"/><circle cx="145" cy="229" r="9"/><circle cx="212" cy="229" r="9"/></g></svg>
+      AiAllDesk
+    </a>
+    <nav aria-label="Sections de la page">
+      <a href="#poles">Les six pôles</a>
+      <a href="#chiffres">Les chiffres</a>
+      <a href="#etapes">Comment ça se passe</a>
+      <a href="#donnees">Vos données</a>
+    </nav>
+    <a class="bouton plein petit" href="#contact">Audit gratuit</a>
+  </header>
+
+  <main id="contenu">
+  <section class="haut sombre" aria-labelledby="titre">
+    <img class="fond" src="fond-tapis-court.jpg" alt="Un tapis roulant chargé d’enveloppes et de colis traverse une plaine au crépuscule, vers un petit bâtiment aux fenêtres allumées.">
+    <div class="voile" aria-hidden="true"></div>
+    <div class="accroche">
+      <p class="etiq">Automatisation par IA · Luxembourg</p>
+      <h1 class="deux" id="titre"><span>L’IA prépare votre travail de bureau.</span> <span>Vous validez.</span></h1>
+      <p class="sous">Tout ce que votre équipe refait chaque semaine, l’IA peut le préparer. Rien ne part sans vous.</p>
+      <div class="boutons">
+        <a class="bouton plein" href="#contact">Demander un audit gratuit</a>
+        <a class="bouton" href="#poles">Voir les six pôles</a>
+      </div>
+      <p class="note"><b>Audit gratuit.</b> Une heure sur une de vos tâches, puis un compte rendu écrit.</p>
+    </div>
+
+    <div class="ecran" role="group" aria-label="Exemple à essayer : trois messages reçus, trois réponses préparées par l’IA, à valider">
+      <div class="e-barre"><span><b>Réponses clients</b> · Société Exemple S.à r.l. <span class="ex">exemple inventé</span></span><span>À essayer · message <span class="e-compte">1 / 3</span></span></div>
+      <div class="e-corps">
+        <ol class="e-liste" aria-label="Messages reçus">
+          <li><button type="button" class="e-mail" aria-current="true"><strong>Claire Weber</strong><span>Demande de devis</span><em>À valider</em></button></li>
+          <li><button type="button" class="e-mail"><strong>Marc Thill</strong><span>Facture 2026-0187</span><em>À valider</em></button></li>
+          <li><button type="button" class="e-mail"><strong>Sofia Lopes</strong><span>Rendez-vous de jeudi</span><em>À valider</em></button></li>
+        </ol>
+        <div>
+          <article class="e-detail" data-envoi="Envoyée à 9 h 14, après votre accord">
+            <div class="e-entete"><span>Claire Weber · Demande de devis</span><small>reçu à 9 h 12</small></div>
+            <p class="e-msg">Bonjour, nous cherchons un prestataire pour l’entretien de nos bureaux : 180 m² à Strassen, deux passages par semaine. Pouvez-vous m’envoyer un devis ?</p>
+            <div class="puces" aria-label="Ce que l’IA a compris"><span class="puce">Demande de devis</span><span class="puce">180 m² · Strassen</span><span class="puce">2 passages par semaine</span></div>
+            <div class="e-reponse">
+              <p class="etiq">Réponse proposée</p>
+              <p>Bonjour Madame Weber, merci pour votre demande. Vous trouverez en pièce jointe notre devis pour 180 m² et deux passages par semaine. Je peux passer voir les locaux mardi ou jeudi matin : dites-moi ce qui vous convient.</p>
+              <span class="pj">Devis-2026-114.pdf</span>
+              <div class="e-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span></div>
+            </div>
+          </article>
+          <article class="e-detail" data-envoi="Envoyée à 9 h 41, après votre accord" hidden>
+            <div class="e-entete"><span>Marc Thill · Facture 2026-0187</span><small>reçu à 9 h 40</small></div>
+            <p class="e-msg">Bonjour, je ne retrouve pas votre facture d’octobre. Pouvez-vous me la renvoyer ? Merci.</p>
+            <div class="puces" aria-label="Ce que l’IA a compris"><span class="puce">Renvoi de facture</span><span class="puce">Facture 2026-0187</span><span class="puce">Client existant</span></div>
+            <div class="e-reponse">
+              <p class="etiq">Réponse proposée</p>
+              <p>Bonjour Monsieur Thill, voici la facture 2026-0187 du 31 octobre, d’un montant de 1 462,50 € TTC. Elle est à régler pour le 30 novembre.</p>
+              <span class="pj">Facture-2026-0187.pdf</span>
+              <div class="e-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span></div>
+            </div>
+          </article>
+          <article class="e-detail" data-envoi="Envoyée à 10 h 06, après votre accord" hidden>
+            <div class="e-entete"><span>Sofia Lopes · Rendez-vous de jeudi</span><small>reçu à 10 h 05</small></div>
+            <p class="e-msg">Bonjour, je ne pourrai pas être là jeudi à 14 h. Est-il possible de décaler à vendredi ?</p>
+            <div class="puces" aria-label="Ce que l’IA a compris"><span class="puce">Report de rendez-vous</span><span class="puce">Jeudi 14 h</span><span class="puce">Vendredi demandé</span></div>
+            <div class="e-reponse">
+              <p class="etiq">Réponse proposée</p>
+              <p>Bonjour Madame Lopes, c’est noté. Je vous propose vendredi à 10 h ou à 15 h : l’agenda est libre aux deux heures.</p>
+              <div class="e-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="e-fin" hidden><span>Trois clics, trois clients servis.</span><button type="button" class="rejouer">Rejouer l’exemple</button></div>
+    </div>
+
+    <nav class="liens-poles" aria-label="Aller à un pôle">
+      <a href="#pole-0" style="--pc:var(--e-fact)"><svg class="ico" aria-hidden="true"><use href="#i-facture"/></svg>Facturation</a>
+      <a href="#pole-1" style="--pc:var(--e-docs)"><svg class="ico" aria-hidden="true"><use href="#i-dossier"/></svg>Documents</a>
+      <a href="#pole-2" style="--pc:var(--e-rep)"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>Réponses clients</a>
+      <a href="#pole-3" style="--pc:var(--e-vente)"><svg class="ico" aria-hidden="true"><use href="#i-vente"/></svg>Vente</a>
+      <a href="#pole-4" style="--pc:var(--e-mkt)"><svg class="ico" aria-hidden="true"><use href="#i-marketing"/></svg>Marketing</a>
+      <a href="#pole-5" style="--pc:var(--e-recr)"><svg class="ico" aria-hidden="true"><use href="#i-personne"/></svg>Recrutement</a>
+    </nav>
+  </section>
+
+  <section class="poles bloc" id="poles" data-mode="onglets" aria-labelledby="t-poles">
+    <i class="raccord" aria-hidden="true"></i><i class="coude" aria-hidden="true"></i><div class="rail" aria-hidden="true"><i></i></div>
+    <header class="tete">
+      <p class="etiq">Les six pôles</p>
+      <h2 id="t-poles">Six tâches de bureau, un même principe.</h2>
+      <p>Choisissez la tâche qui vous coûte le plus, et regardez-la se faire, étape par étape.</p>
+    </header>
+    <div class="onglets" role="tablist" aria-label="Choisir un pôle" hidden><button type="button" role="tab" id="onglet-0" aria-controls="pole-0" aria-selected="true" tabindex="0" style="--pc:var(--p-fact)"><svg class="ico" aria-hidden="true"><use href="#i-facture"/></svg>Facturation</button><button type="button" role="tab" id="onglet-1" aria-controls="pole-1" aria-selected="false" tabindex="-1" style="--pc:var(--p-docs)"><svg class="ico" aria-hidden="true"><use href="#i-dossier"/></svg>Documents</button><button type="button" role="tab" id="onglet-2" aria-controls="pole-2" aria-selected="false" tabindex="-1" style="--pc:var(--p-rep)"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>Réponses clients</button><button type="button" role="tab" id="onglet-3" aria-controls="pole-3" aria-selected="false" tabindex="-1" style="--pc:var(--p-vente)"><svg class="ico" aria-hidden="true"><use href="#i-vente"/></svg>Vente</button><button type="button" role="tab" id="onglet-4" aria-controls="pole-4" aria-selected="false" tabindex="-1" style="--pc:var(--p-mkt)"><svg class="ico" aria-hidden="true"><use href="#i-marketing"/></svg>Marketing</button><button type="button" role="tab" id="onglet-5" aria-controls="pole-5" aria-selected="false" tabindex="-1" style="--pc:var(--p-recr)"><svg class="ico" aria-hidden="true"><use href="#i-personne"/></svg>Recrutement</button></div>
+    <article class="pole" id="pole-0" style="--pc:var(--p-fact);--pe:var(--e-fact)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-facture"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-facture"/></svg>Facturation</p><h3 class="deux"><span>Travail fini, facture partie.</span></h3><p>Vous finissez le travail, l’IA prépare la facture, vous validez, elle part. À l’échéance, elle relance selon la règle que vous avez validée. Le projet de loi n° 8815 prévoit la facture électronique entre entreprises au Luxembourg à partir de 2028 : autant être prêt.</p><ul class="chiffres"><li><strong>42 %</strong><span>des factures entre entreprises payées à l’échéance au Luxembourg en 2024. C’était 56 % en 2023.</span><small class="source">Observatoire européen des paiements, rapport 2025</small></li><li><strong>9,12 h</strong><span>par semaine passées à relancer les factures en retard, en moyenne en Europe.</span><small class="source">Intrum, European Payment Report 2026 (société de recouvrement)</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="2" role="group" aria-label="Exemple à essayer, étape par étape : Facturation"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Le travail est fini. La facture se prépare toute seule, à partir de ce qui a été fait." data-etat="L’IA prépare la facture"><b>1</b><span>Travail fini</span></button></li><li class="fait"><button type="button" data-phrase="Elle est prête, avec les bonnes mentions. Personne n’a rien saisi." data-etat="Prête à relire"><b>2</b><span>Facture prête</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="Un coup d’œil, un clic : c’est vous qui dites oui." data-etat="En attente de votre accord"><b>3</b><span>Vous validez</span></button></li><li class=""><button type="button" data-phrase="Elle part le jour même, pas à la fin du mois." data-etat="Envoyée le 31 octobre"><b>4</b><span>Envoyée</span></button></li><li class=""><button type="button" data-phrase="À l’échéance, la relance part selon la règle que vous avez validée, jusqu’au paiement." data-etat="Payée le 6 décembre"><b>5</b><span>Relancée</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Travail terminé · Société Exemple S.A.</b></p><p class="vu" data-de="0">Entretien des bureaux, octobre 2026 : 8 passages.</p><p class="vu" data-de="1"><b>Facture 2026-0187</b></p><p class="vu" data-de="1">1 250,00 € HT · TVA 17 % · 1 462,50 € TTC · à régler sous 30 jours</p><div class="puces"><span class="puce" data-de="3">Envoyée le 31 octobre</span><span class="puce" data-de="4">Relance le 3 décembre</span><span class="puce" data-de="4">Payée le 6 décembre</span></div></div><p class="t-phrase" aria-live="polite">Un coup d’œil, un clic : c’est vous qui dites oui.</p><div class="t-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span><button type="button" class="rejouer" hidden>Rejouer</button></div></div>
+    </article>
+    <article class="pole" id="pole-1" style="--pc:var(--p-docs);--pe:var(--e-docs)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-dossier"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-dossier"/></svg>Documents</p><h3 class="deux"><span>Un document arrive.</span> <span>Il est déjà rangé.</span></h3><p>L’IA lit chaque pièce, lui donne un nom clair et la classe au bon endroit. Elle contrôle le montant, la date et les doublons.</p><ul class="chiffres"><li><strong>8,2 jours</strong><span>pour traiter une facture fournisseur, en moyenne.</span><small class="source">Ardent Partners, The State of ePayables 2025</small></li><li><strong>−79 %</strong><span>de coût de traitement par facture chez les entreprises les mieux équipées, par rapport aux autres.</span><small class="source">Ardent Partners, The State of ePayables 2025</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="-1" role="group" aria-label="Exemple à essayer, étape par étape : Documents"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Un document arrive, par courriel, par scanner ou par l’espace client." data-etat="Reçu par courriel"><b>1</b><span>Reçu</span></button></li><li class="fait"><button type="button" data-phrase="L’IA le lit en entier, ligne par ligne." data-etat="Lecture en cours"><b>2</b><span>Lu</span></button></li><li class="fait"><button type="button" data-phrase="Elle lui donne un nom clair, toujours sur le même modèle." data-etat="Nommé"><b>3</b><span>Nommé</span></button></li><li class="fait"><button type="button" data-phrase="Elle le range dans le bon dossier, sans qu’on le lui demande." data-etat="Rangé"><b>4</b><span>Rangé</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="Elle vérifie le montant, la date et les doublons. Au moindre doute, elle vous le montre." data-etat="Contrôlé"><b>5</b><span>Contrôlé</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Document reçu par courriel</b></p><p class="vu" data-de="1">Facture du fournisseur Exemple, 14 octobre 2026, 842,40 € TTC.</p><p class="fichier vu" data-de="2">2026-10_Facture_Fournisseur-Exemple_0412.pdf</p><p class="vu" data-de="3">Rangé dans : Fournisseurs › 2026 › Octobre</p><div class="puces"><span class="puce vu" data-de="4">Montant vérifié</span><span class="puce vu" data-de="4">Date vérifiée</span><span class="puce vu" data-de="4">Pas de doublon</span></div></div><p class="t-phrase" aria-live="polite">Elle vérifie le montant, la date et les doublons. Au moindre doute, elle vous le montre.</p><div class="t-actions"><span class="etat">Contrôlé</span><button type="button" class="rejouer">Rejouer</button></div></div>
+    </article>
+    <article class="pole" id="pole-2" style="--pc:var(--p-rep);--pe:var(--e-rep)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>Réponses clients</p><h3 class="deux"><span>Le client qui attend une réponse en cherche déjà une ailleurs.</span></h3><p>L’IA prépare la réponse à chaque demande. Il ne vous reste qu’à relire et à envoyer.</p><ul class="chiffres"><li><strong>+15 %</strong><span>de demandes résolues par heure avec un assistant qui propose les réponses.</span><small class="source">Brynjolfsson, Li et Raymond, Quarterly Journal of Economics, 2025</small></li><li><strong>63,5 %</strong><span>des 1 000 entreprises testées n’ont jamais répondu à une demande de démonstration.</span><small class="source">RevenueHero, test de 2024 (vendeur de logiciels)</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="3" role="group" aria-label="Exemple à essayer, étape par étape : Réponses clients"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Une demande arrive. Le client attend déjà." data-etat="Reçue à 10 h 20"><b>1</b><span>Reçue</span></button></li><li class="fait"><button type="button" data-phrase="L’IA la lit et comprend ce qu’il veut vraiment." data-etat="Comprise"><b>2</b><span>Comprise</span></button></li><li class="fait"><button type="button" data-phrase="Elle rédige la réponse, avec vos mots et vos documents." data-etat="Réponse prête à relire"><b>3</b><span>Réponse prête</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="Vous relisez, vous corrigez si besoin, vous validez." data-etat="En attente de votre accord"><b>4</b><span>Vous validez</span></button></li><li class=""><button type="button" data-phrase="La réponse part. Le client n’a pas eu le temps d’aller voir ailleurs." data-etat="Envoyée à 10 h 26"><b>5</b><span>Envoyée</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Jean Muller · formulaire du site</b></p><p class="vu" data-de="0"><q>Pouvez-vous livrer le 12 au lieu du 15 ?</q></p><div class="puces"><span class="puce vu" data-de="1">Changement de date</span><span class="puce vu" data-de="1">Commande 2026-331</span><span class="puce vu" data-de="1">Client existant</span></div><p class="vu" data-de="2"><b>Réponse proposée</b></p><p class="vu" data-de="2"><q>Bonjour Monsieur Muller, c’est possible : nous livrons le 12 au matin. Bien à vous.</q></p></div><p class="t-phrase" aria-live="polite">Vous relisez, vous corrigez si besoin, vous validez.</p><div class="t-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span><button type="button" class="rejouer" hidden>Rejouer</button></div></div>
+    </article>
+    <article class="pole" id="pole-3" style="--pc:var(--p-vente);--pe:var(--e-vente)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-vente"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-vente"/></svg>Vente</p><h3 class="deux"><span>Vos commerciaux vendent.</span> <span>L’IA remplit les fiches.</span></h3><p>Compte rendu, fiche client, relance : préparés après chaque rendez-vous. Le commercial valide et passe au suivant.</p><ul class="chiffres"><li><strong>60 %</strong><span>de la semaine des commerciaux passe à autre chose qu’à vendre.</span><small class="source">Salesforce, State of Sales 2026 (vendeur de logiciels)</small></li><li><strong>15 min</strong><span>de saisie en moins par rendez-vous chez Liantis : de 20 à 5 minutes.</span><small class="source">Cas publié par Donna (vendeur du logiciel)</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="3" role="group" aria-label="Exemple à essayer, étape par étape : Vente"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Le rendez-vous se termine. Le commercial repart les mains libres." data-etat="Rendez-vous terminé"><b>1</b><span>Rendez-vous</span></button></li><li class="fait"><button type="button" data-phrase="Le compte rendu s’écrit à partir de ses notes." data-etat="Compte rendu écrit"><b>2</b><span>Compte rendu</span></button></li><li class="fait"><button type="button" data-phrase="La fiche du client se met à jour toute seule." data-etat="Fiche à jour"><b>3</b><span>Fiche remplie</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="La relance est prête pour la bonne date. Il la valide." data-etat="En attente de votre accord"><b>4</b><span>Vous validez</span></button></li><li class=""><button type="button" data-phrase="Elle part à l’heure, sans que personne ait à y penser." data-etat="Envoyée le 21 octobre à 9 h"><b>5</b><span>Relance</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Rendez-vous · Garage Exemple, 14 octobre</b></p><p class="vu" data-de="1">Compte rendu : intéressé par le contrat annuel, demande un devis pour trois véhicules.</p><p class="vu" data-de="2">Fiche client : besoin, budget et prochain contact mis à jour.</p><p class="vu" data-de="3"><b>Relance préparée pour le 21 octobre</b></p><p class="vu" data-de="3"><q>Bonjour, voici le devis dont nous avons parlé le 14.</q></p></div><p class="t-phrase" aria-live="polite">La relance est prête pour la bonne date. Il la valide.</p><div class="t-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span><button type="button" class="rejouer" hidden>Rejouer</button></div></div>
+    </article>
+    <article class="pole" id="pole-4" style="--pc:var(--p-mkt);--pe:var(--e-mkt)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-marketing"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-marketing"/></svg>Marketing</p><h3 class="deux"><span>Vos publications de la semaine sont prêtes.</span> <span>Vous n’avez qu’à dire oui.</span></h3><p>Une idée tirée de votre activité, un texte dans votre ton, un visuel. Vous validez, c’est programmé.</p><ul class="chiffres"><li><strong>−40 %</strong><span>de temps pour rédiger un texte de travail avec une IA, dans un essai contrôlé.</span><small class="source">Noy et Zhang, revue Science, 2023</small></li><li><strong>5,7 %</strong><span>des entreprises du Luxembourg utilisent l’IA pour leur marketing ou leurs ventes.</span><small class="source">Eurostat, 2025, entreprises de 10 personnes et plus</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="3" role="group" aria-label="Exemple à essayer, étape par étape : Marketing"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Une idée par semaine, tirée de ce que vous faites vraiment." data-etat="Idée proposée"><b>1</b><span>Idée</span></button></li><li class="fait"><button type="button" data-phrase="Le texte s’écrit, dans votre ton." data-etat="Texte rédigé"><b>2</b><span>Texte</span></button></li><li class="fait"><button type="button" data-phrase="Le visuel suit." data-etat="Visuel prêt"><b>3</b><span>Visuel</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="Vous gardez ce qui vous ressemble. Rien n’est publié sans vous." data-etat="En attente de votre accord"><b>4</b><span>Vous validez</span></button></li><li class=""><button type="button" data-phrase="La publication part au bon moment, sans y repenser." data-etat="Programmée jeudi à 9 h"><b>5</b><span>Publiée</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Idée de la semaine</b></p><p class="vu" data-de="0">Les trois questions que nos clients posent le plus en octobre.</p><p class="vu" data-de="1"><q>Chaque automne, vous êtes nombreux à nous demander…</q></p><div class="visuel vu" data-de="2" role="img" aria-label="Visuel de la publication"></div></div><p class="t-phrase" aria-live="polite">Vous gardez ce qui vous ressemble. Rien n’est publié sans vous.</p><div class="t-actions"><button type="button" class="valider">Vous validez</button><span class="etat">En attente de votre accord</span><button type="button" class="rejouer" hidden>Rejouer</button></div></div>
+    </article>
+    <article class="pole" id="pole-5" style="--pc:var(--p-recr);--pe:var(--e-recr)">
+      <span class="noeud" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-personne"/></svg></span>
+      <div class="texte"><p class="etiq"><svg class="ico" aria-hidden="true"><use href="#i-personne"/></svg>Recrutement</p><h3 class="deux"><span>Les candidatures sont lues et préparées.</span> <span>Vous décidez.</span></h3><p>L’outil prépare le dossier de chaque candidat. Une personne décide toujours, et les candidats sont prévenus.</p><ul class="chiffres"><li><strong>52 %</strong><span>des PME européennes jugent très difficile de trouver les bonnes compétences.</span><small class="source">Commission européenne, Eurobaromètre 529, 2023</small></li><li><strong>20 %</strong><span>de la semaine gagnée, environ, d’après les recruteurs qui utilisent l’IA.</span><small class="source">LinkedIn, Future of Recruiting 2025 (vendeur de logiciels)</small></li></ul><a class="lien" href="#contact">Je veux ça pour mon bureau</a></div>
+      <div class="trajet sombre" data-attente="3" role="group" aria-label="Exemple à essayer, étape par étape : Recrutement"><ol class="t-etapes" aria-label="Les cinq étapes"><li class="fait"><button type="button" data-phrase="Les candidatures arrivent, parfois par dizaines." data-etat="Trois candidatures reçues"><b>1</b><span>Reçues</span></button></li><li class="fait"><button type="button" data-phrase="L’outil les lit toutes, selon la même grille." data-etat="Lues"><b>2</b><span>Lues</span></button></li><li class="fait"><button type="button" data-phrase="Il prépare un dossier lisible. Le candidat est prévenu qu’un outil aide au tri." data-etat="Dossier prêt"><b>3</b><span>Dossier prêt</span></button></li><li class="ici"><button type="button" aria-current="step" data-phrase="Vous décidez. Toujours." data-etat="En attente de votre décision"><b>4</b><span>Vous décidez</span></button></li><li class=""><button type="button" data-phrase="Chaque candidat reçoit une réponse, même quand c’est non." data-etat="Réponse envoyée aux trois candidats"><b>5</b><span>Réponse</span></button></li></ol><div class="t-carte"><p class="vu" data-de="0"><b>Trois candidatures · assistant comptable</b></p><p class="vu" data-de="1">Lues selon la même grille : diplôme, expérience, langues.</p><p class="vu" data-de="2"><b>Dossier · Candidat 1</b></p><p class="vu" data-de="2">BTS comptabilité, quatre ans d’expérience, français et allemand.</p><div class="puces"><span class="puce vu" data-de="2">Candidat prévenu</span></div></div><p class="t-phrase" aria-live="polite">Vous décidez. Toujours.</p><div class="t-actions"><button type="button" class="valider">Vous décidez</button><span class="etat">En attente de votre décision</span><button type="button" class="rejouer" hidden>Rejouer</button></div></div>
+    </article>
+  </section>
+
+  <figure class="citation sombre c-nuage">
+    <img class="fond" src="fond-tapis-court.jpg" alt="">
+    <div class="voile" aria-hidden="true"></div>
+    <div class="c-texte">
+      <blockquote><span class="eux">« Une agence vous vend ce qu’elle a déjà.</span> <span class="moi">Moi, je construis ce qu’il vous faut. »</span></blockquote>
+      <figcaption><b>Nils Davoine</b>, fondateur d’AiAllDesk</figcaption>
+    </div>
+  </figure>
+
+  <section class="bloc" id="chiffres" aria-labelledby="t-chiffres">
+    <header class="tete">
+      <p class="etiq">Les chiffres</p>
+      <h2 id="t-chiffres">Combien de jours votre équipe récupère-t-elle par an ?</h2>
+      <p>Mettez vos propres nombres. Chaque ligne multiplie votre volume par un gain, dont la source est écrite dessous.</p>
+    </header>
+    <div class="simu">
+      <form class="reglages" id="reglages" aria-label="Vos nombres">
+        <div class="reglage"><label for="s-rep">Personnes à temps plein qui répondent aux clients</label><input id="s-rep" type="number" inputmode="decimal" min="0" max="50" step="0.5" value="1"><small>Gain appliqué : 13 % du temps, soit 15 % de demandes résolues en plus par heure (Brynjolfsson, Li et Raymond, 2025).</small></div>
+        <div class="reglage"><label for="s-com">Commerciaux</label><input id="s-com" type="number" inputmode="numeric" min="0" max="50" step="1" value="3"><small>Chacun tient les rendez-vous de la ligne suivante.</small></div>
+        <div class="reglage"><label for="s-rdv">Rendez-vous par semaine et par commercial</label><input id="s-rdv" type="number" inputmode="numeric" min="0" max="40" step="1" value="8"><small>Gain appliqué : 15 minutes par rendez-vous, de 20 à 5 minutes de saisie (cas Liantis, publié par Donna, vendeur du logiciel).</small></div>
+        <div class="reglage"><label for="s-recr">Heures de recrutement par semaine</label><input id="s-recr" type="number" inputmode="decimal" min="0" max="80" step="1" value="4"><small>Gain appliqué : 20 % (LinkedIn, Future of Recruiting 2025, vendeur de logiciels).</small></div>
+        <div class="reglage"><label for="s-red">Heures de rédaction par semaine</label><input id="s-red" type="number" inputmode="decimal" min="0" max="80" step="1" value="4"><small>Gain appliqué : 40 % (Noy et Zhang, revue Science, 2023).</small></div>
+        <div class="reglage"><label for="s-cout">Coût d’une heure de travail, en euros</label><input id="s-cout" type="number" inputmode="decimal" min="0" max="500" step="0.1" value="56.8"><small>56,80 € : coût moyen d’une heure pour l’employeur au Luxembourg, hors administration publique (Eurostat, 2025). Mettez le vôtre.</small></div>
+      </form>
+      <div class="resultat" aria-live="polite">
+        <div class="gros"><strong id="r-jours">77</strong><span>jours de travail rendus à l’équipe, chaque année</span></div>
+        <p>Soit <b id="r-heures">613</b> heures, ou <b id="r-part">34 % d’un poste à temps plein</b>.</p>
+        <div>
+          <div class="cases" id="cases" role="img" aria-label="77 jours colorés sur 225 : Réponses clients 29, Vente 34, Recrutement 5, Marketing 9."><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="source" style="margin-top:8px">Chaque case est un jour de travail d’une personne à temps plein : 225 par an (45 semaines).</p>
+        </div>
+        <ul class="legende" id="legende">
+          <li><i class="l0"></i>Réponses clients <b>29 j · 13 336 €</b></li>
+          <li><i class="l1"></i>Vente <b>34 j · 15 336 €</b></li>
+          <li><i class="l2"></i>Recrutement <b>5 j · 2 045 €</b></li>
+          <li><i class="l3"></i>Marketing <b>9 j · 4 090 €</b></li>
+        </ul>
+        <p>Valeur de ce temps, s’il est réemployé : <b id="r-valeur">34 807 €</b> par an.</p>
+        <a class="bouton plein" href="#contact" style="align-self:flex-start">Refaire ce calcul avec vos vrais volumes</a>
+      </div>
+    </div>
+    <p class="mention">C’est un exemple, pas une promesse. Ces quatre gains ont été mesurés ailleurs, sur d’autres équipes, et deux sont publiés par des vendeurs de logiciels. La facturation et les documents ne sont pas comptés : je n’ai pas trouvé de mesure publiée de leur gain. L’audit gratuit refait ce calcul avec vos vrais volumes.</p>
+  </section>
+
+  <section class="bloc" id="etapes" aria-labelledby="t-etapes">
+    <header class="tete">
+      <p class="etiq">Comment ça se passe</p>
+      <h2 id="t-etapes">Je ne vous laisse pas seul avec un outil.</h2>
+      <p>Je regarde votre tâche, je l’installe chez vous, je reste joignable.</p>
+    </header>
+    <ol class="marche">
+      <li><b>1</b><h3>L’audit gratuit</h3><p>Une heure. Vous me montrez la tâche qui vous pèse, je vous dis ce qui peut disparaître.</p></li>
+      <li><b>2</b><h3>Le compte rendu écrit</h3><p>Noir sur blanc : ce qui change, ce que vous gagnez, ce que cela coûte. Vous décidez, et vous ne me devez rien.</p></li>
+      <li><b>3</b><h3>L’installation</h3><p>Rien à changer dans vos habitudes : l’IA vient se brancher sur vos outils, et je la règle avec vous sur des cas réels.</p></li>
+      <li><b>4</b><h3>Le suivi</h3><p>Vous gardez la main sur tout ce qui part. Je reste joignable et j’ajuste.</p></li>
+    </ol>
+    <div class="prix">
+      <div>
+        <h3>Combien ça coûte ?</h3>
+        <p>Vous le savez avant de décider : le prix est dans le compte rendu. Et l’État peut en payer 70 % (aide SME Packages – AI, projets de 3 000 à 25 000 € hors taxes, demande à faire accepter avant toute commande).</p>
+      </div>
+      <a class="bouton" href="https://guichet.public.lu/fr/entreprises/financement-aides/regime-sme-packages/soutien-pme/sme-package-ai.html" target="_blank" rel="noopener">Voir la fiche officielle sur Guichet.lu</a>
+    </div>
+  </section>
+
+  <figure class="citation c-clair">
+    <div class="c-texte">
+      <blockquote><span class="eux">« Personne chez vous n’a été embauché pour recopier.</span> <span class="moi">Je leur rends leur métier. »</span></blockquote>
+      <figcaption><b>Nils Davoine</b>, fondateur d’AiAllDesk</figcaption>
+    </div>
+  </figure>
+
+  <section class="bloc" id="donnees" aria-labelledby="t-donnees">
+    <div class="duo">
+      <div class="tete" style="gap:22px">
+        <p class="etiq">Vos données</p>
+        <h2 id="t-donnees">Vos données, vos règles.</h2>
+        <ul class="engagements">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-ecrit"/></svg><b>Vous savez où vont vos données avant qu’elles bougent.</b><p>Où elles sont traitées, par quel outil d’IA, qui y a accès : c’est écrit, et vous l’avez lu avant tout branchement.</p></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-oeil"/></svg><b>Une tâche, un accès.</b><p>Pas un de plus.</p></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><b>L’IA propose, quelqu’un de chez vous dispose.</b><p>Pour le recrutement, une personne décide toujours et les candidats sont prévenus.</p></li>
+        </ul>
+      </div>
+      <aside class="qui" aria-labelledby="t-qui">
+        <p class="etiq">Qui est derrière</p>
+        <h3 id="t-qui">Nils Davoine, fondateur</h3>
+        <blockquote class="mot"><span class="eux">« Une agence vous envoie celui qui est libre.</span> <span class="moi">Vous, vous aurez l’expert. »</span></blockquote>
+        <p>Un seul nom, du premier rendez-vous au dernier réglage : le sien.</p>
+        <a class="bouton" href="vision.html" style="align-self:flex-start;margin-top:6px">Lire sa vision</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="fin sombre" id="contact" aria-labelledby="t-contact">
+    <img class="fond" src="fond-tapis-court.jpg" alt="">
+    <div class="voile" aria-hidden="true"></div>
+    <p class="etiq">Audit gratuit</p>
+    <h2 id="t-contact">Montrez-moi la tâche qui vous pèse.</h2>
+    <p>Vous me montrez une tâche qui vous prend du temps. Je regarde avec vous ce qui peut s’automatiser. Vous recevez ensuite un compte rendu écrit : ce qui peut changer, et ce que cela vous rendrait.</p>
+    <p class="adresse">Écrivez à <span id="courriel" class="vide">adresse de courriel à venir</span><button type="button" class="bouton plein petit" id="copier" hidden>Copier l’adresse</button></p>
+    <p class="source" id="copie-ok" aria-live="polite">Dites-moi en trois lignes : votre société, la tâche qui vous prend du temps, et quand vous joindre.</p>
+    <p class="source">Ou écrivez-moi sur <a class="lien" href="https://www.linkedin.com/in/nils-davoine-81b46b19b" target="_blank" rel="noopener">LinkedIn</a>.</p>
+    <ul class="assurances">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Gratuit, et libre de s’arrêter là.</li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Vos dossiers restent confidentiels.</li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Réponse en deux jours ouvrés, par moi.</li>
+    </ul>
+  </section>
+  </main>
+
+  <footer class="pied">
+    <p><strong>AiAllDesk</strong>, société en cours de constitution, Luxembourg. Les écrans d’exemple et les noms qu’ils montrent sont inventés.</p>
+    <details>
+      <summary>Mentions légales</summary>
+      <p>Éditeur du site : AiAllDesk, société en cours de constitution, Luxembourg. Responsable de la publication : Nils Davoine. Les mentions complètes (siège, numéro au registre de commerce, numéro de TVA, autorisation d’établissement, hébergeur) seront publiées ici dès la constitution de la société.</p>
+    </details>
+    <details>
+      <summary>Données personnelles</summary>
+      <p>Ce site ne dépose aucun traceur et ne mesure pas votre visite. Si vous m’écrivez, j’utilise votre nom, votre adresse et votre message pour vous répondre, et pour rien d’autre. Je les garde douze mois au plus après le dernier échange. Vous pouvez demander à les consulter, à les corriger ou à les effacer en écrivant à l’adresse de contact. Autorité de contrôle : Commission nationale pour la protection des données (CNPD), Luxembourg.</p>
+    </details>
+  </footer>
+</div>
+
+<script>
+document.documentElement.lang = "fr";
+const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* L'exemple du haut. Rien ne bouge seul : c'est le clic sur « Vous validez » qui envoie la réponse et passe au message suivant. */
+(() => {
+  const ecran = document.querySelector(".ecran"); if (!ecran) return;
+  const mails = [...ecran.querySelectorAll(".e-mail")], details = [...ecran.querySelectorAll(".e-detail")];
+  const compte = ecran.querySelector(".e-compte"), fin = ecran.querySelector(".e-fin"), rejouer = fin.querySelector("button");
+  const faits = new Set(); let fil = null;
+  const montre = i => {
+    details.forEach((d, k) => d.hidden = k !== i);
+    mails.forEach((m, k) => k === i ? m.setAttribute("aria-current", "true") : m.removeAttribute("aria-current"));
+    compte.textContent = (i + 1) + " / " + mails.length;
+  };
+  mails.forEach((m, i) => m.addEventListener("click", () => { clearTimeout(fil); montre(i); }));
+  details.forEach((d, i) => {
+    const b = d.querySelector(".valider"), etat = d.querySelector(".etat");
+    b.addEventListener("click", () => {
+      faits.add(i); b.hidden = true; etat.textContent = d.dataset.envoi; d.classList.add("envoye");
+      mails[i].classList.add("fait"); mails[i].querySelector("em").textContent = "Répondue";
+      const suivant = mails.findIndex((m, k) => !faits.has(k));
+      if (suivant < 0) { fin.hidden = false; rejouer.focus({preventScroll: true}); return; }
+      fil = setTimeout(() => { montre(suivant); details[suivant].querySelector(".valider").focus({preventScroll: true}); }, calme ? 0 : 1100);
+    });
+  });
+  rejouer.addEventListener("click", () => {
+    faits.clear(); fin.hidden = true;
+    details.forEach(d => { d.classList.remove("envoye"); d.querySelector(".valider").hidden = false; d.querySelector(".etat").textContent = "En attente de votre accord"; });
+    mails.forEach(m => { m.classList.remove("fait"); m.querySelector("em").textContent = "À valider"; });
+    montre(0); details[0].querySelector(".valider").focus({preventScroll: true});
+  });
+})();
+
+/* Les six trajets. Au repos, chacun attend à l'étape où une personne valide. Le clic fait avancer la suite ; chaque étape se clique aussi. */
+document.querySelectorAll(".trajet").forEach(t => {
+  const items = [...t.querySelectorAll(".t-etapes li")], pas = items.map(li => li.querySelector("button"));
+  const lignes = [...t.querySelectorAll("[data-de]")], phrase = t.querySelector(".t-phrase"), etat = t.querySelector(".etat");
+  const valider = t.querySelector(".valider"), rejouer = t.querySelector(".rejouer");
+  const attente = +t.dataset.attente, dernier = pas.length - 1; let fil = null;
+  const va = i => {
+    items.forEach((li, k) => { li.classList.toggle("fait", k < i); li.classList.toggle("ici", k === i); k === i ? pas[k].setAttribute("aria-current", "step") : pas[k].removeAttribute("aria-current"); });
+    lignes.forEach(l => l.classList.toggle("vu", +l.dataset.de <= i));
+    phrase.textContent = pas[i].dataset.phrase; etat.textContent = pas[i].dataset.etat;
+    if (valider) valider.hidden = i !== attente;
+    rejouer.hidden = i !== dernier;
+  };
+  const file = (i, jusqua) => { clearTimeout(fil); va(i); if (i < jusqua) fil = setTimeout(() => file(i + 1, jusqua), calme ? 0 : 1700); };
+  pas.forEach((b, k) => b.addEventListener("click", () => { clearTimeout(fil); va(k); }));
+  if (valider) valider.addEventListener("click", () => { pas[attente + 1].focus({preventScroll: true}); file(attente + 1, dernier); });
+  rejouer.addEventListener("click", () => { pas[0].focus({preventScroll: true}); file(0, attente < 0 ? dernier : attente); });
+});
+
+/* Le simulateur : un seul calcul, refait à chaque nombre modifié. 45 semaines travaillées, 8 heures par jour. */
+(() => {
+  const z = id => document.getElementById(id); if (!z("s-rep")) return;
+  const SEM = 45, JOUR = 8, AN = SEM * 5, G = {rep: 1 - 1 / 1.15, vente: 0.25, recr: 0.20, mkt: 0.40};
+  const lit = id => { const v = parseFloat(String(z(id).value).replace(",", ".")); return isFinite(v) && v > 0 ? v : 0; };
+  const fr = (n, d = 0) => n.toLocaleString("fr-FR", {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/\u202f/g, "\u00a0");
+  const cases = [...z("cases").children], lignes = [...z("legende").querySelectorAll("b")], NOMS = ["Réponses clients", "Vente", "Recrutement", "Marketing"];
+  const calcule = () => {
+    const cout = lit("s-cout");
+    const h = [lit("s-rep") * 40 * SEM * G.rep, lit("s-com") * lit("s-rdv") * SEM * G.vente, lit("s-recr") * SEM * G.recr, lit("s-red") * SEM * G.mkt];
+    /* les totaux sont la somme des lignes arrondies, pour que la légende et le grand nombre tombent toujours juste */
+    const somme = t => t.reduce((a, b) => a + b, 0), parLigne = h.map(x => Math.floor(x / JOUR + .5)), euros = h.map(x => Math.floor(x * cout + .5));
+    const total = somme(h), jours = somme(parLigne);
+    z("r-jours").textContent = fr(jours);
+    z("r-heures").textContent = fr(Math.round(total));
+    z("r-part").textContent = jours >= AN ? fr(jours / AN, 1) + " postes à temps plein" : fr(Math.round(jours / AN * 100)) + " % d’un poste à temps plein";
+    z("r-valeur").textContent = fr(somme(euros)) + " €";
+    let k = 0; cases.forEach(c => c.className = "");
+    parLigne.forEach((n, l) => { for (let j = 0; j < n && k < cases.length; j++, k++) cases[k].className = "l" + l; });
+    lignes.forEach((b, l) => b.textContent = fr(parLigne[l]) + " j · " + fr(euros[l]) + " €");
+    z("cases").setAttribute("aria-label", k + " jours colorés sur " + AN + " : " + NOMS.map((n, l) => n + " " + parLigne[l]).join(", ") + ".");
+  };
+  ["s-rep", "s-com", "s-rdv", "s-recr", "s-red", "s-cout"].forEach(id => z(id).addEventListener("input", calcule));
+  z("reglages").addEventListener("submit", e => e.preventDefault());
+  calcule();
+})();
+
+/* Le rail (grand écran, pôles à la file) : il se remplit avec le défilement, une mesure par image affichée. */
+(() => {
+  const zone = document.querySelector('.poles[data-mode="file"]'); if (!zone) return;
+  const plein = zone.querySelector(".rail i"), arts = [...zone.querySelectorAll(".pole")]; let attend = false;
+  const suit = () => {
+    attend = false; const r = zone.getBoundingClientRect(), mi = innerHeight * .5;
+    plein.style.height = Math.max(0, Math.min(1, (mi - r.top - 62) / (r.height - 62))) * 100 + "%";
+    arts.forEach(a => a.classList.toggle("passe", a.getBoundingClientRect().top + 71 < mi));
+  };
+  addEventListener("scroll", () => { if (!attend) { attend = true; requestAnimationFrame(suit); } }, {passive: true});
+  addEventListener("resize", suit); suit();
+})();
+
+/* Variante « un pôle à la fois » : de vrais onglets, au clic comme au clavier. */
+(() => {
+  const zone = document.querySelector('.poles[data-mode="onglets"]'); if (!zone) return;
+  const tabs = [...zone.querySelectorAll('[role="tab"]')], arts = [...zone.querySelectorAll(".pole")];
+  zone.querySelector(".onglets").hidden = false;
+  arts.forEach((a, i) => { a.setAttribute("role", "tabpanel"); a.setAttribute("aria-labelledby", "onglet-" + i); });
+  const choisit = (i, focus) => {
+    tabs.forEach((t, k) => { t.setAttribute("aria-selected", k === i ? "true" : "false"); t.tabIndex = k === i ? 0 : -1; });
+    arts.forEach((a, k) => a.hidden = k !== i); if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => choisit(i));
+    t.addEventListener("keydown", e => {
+      const n = tabs.length, vers = {ArrowRight: (i + 1) % n, ArrowLeft: (i + n - 1) % n, Home: 0, End: n - 1}[e.key];
+      if (vers !== undefined) { e.preventDefault(); choisit(vers, true); }
+    });
+  });
+  document.querySelectorAll(".liens-poles a").forEach((l, i) => l.addEventListener("click", e => {
+    e.preventDefault(); choisit(i); tabs[i].focus({preventScroll: true}); zone.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+  }));
+  const m = /^#pole-(\d)$/.exec(location.hash); choisit(m && arts[+m[1]] ? +m[1] : 0);
+})();
+
+/* L'adresse de contact : dès qu'elle est écrite dans la page, le bouton « Copier » apparaît. */
+(() => {
+  const a = document.getElementById("courriel"), b = document.getElementById("copier"), ok = document.getElementById("copie-ok");
+  if (!a || !a.textContent.includes("@")) return;
+  a.classList.remove("vide"); b.hidden = false;
+  const repli = () => { const r = document.createRange(); r.selectNodeContents(a); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = "Adresse sélectionnée : copiez-la, puis collez-la dans votre messagerie."; };
+  b.addEventListener("click", () => {
+    if (!navigator.clipboard) return repli();
+    navigator.clipboard.writeText(a.textContent.trim()).then(() => { ok.textContent = "Adresse copiée. Collez-la dans votre messagerie."; }, repli);
+  });
+})();
+</script>
+
+</body>
+</html>

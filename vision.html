@@ -28,7 +28,7 @@
 :root{
   --e-fond:#0c121a;--e-surface:#182533;--e-surface-2:#22344a;--e-trait:#30445a;--e-texte:#f3f1ec;--e-doux:#a9b8c4;
   --e-fact:#e6c264;--e-docs:#7fcbab;--e-rep:#8fb4ff;--e-vente:#b7d77a;--e-mkt:#ee9bbd;--e-recr:#b9a6f0;
-  --peche:#f7b092;--peche-survol:#ffc6ad;--sur-peche:#1d1209;
+  --peche:#f7b092;--peche-survol:#ffc6ad;--sur-peche:#1d1209;--carton:#e7d5b0;--ruban:#c9a56a;--sur-carton:#2a2114;--or:#f5c96a;--papier:#fbf8f1;--sur-papier:#1d1a14;
   --titre:"Newsreader",Georgia,"Times New Roman",serif;
   --corps:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --etiq:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -37,7 +37,7 @@
   scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 *{box-sizing:border-box}
-body{background:var(--fond);color:var(--texte);font-family:var(--corps);font-size:var(--t3);line-height:1.55;padding-inline:16px;padding-block:0 40px;overflow-x:clip}
+body{background:var(--fond);color:var(--texte);font-family:var(--corps);font-size:var(--t3);line-height:1.55;padding-inline:16px;padding-block:0 88px;overflow-x:clip}
 .page{max-width:1180px;margin-inline:auto}
 a{color:inherit}
 button,input{font:inherit;color:inherit}
@@ -67,12 +67,17 @@ h3{font-size:var(--t5);line-height:1.16}
 .lien{font-weight:500;text-underline-offset:4px;text-decoration-thickness:1px}
 .lien:hover{text-decoration-thickness:2px}
 
-/* Menu : il suit la lecture */
-.menu{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px 24px;padding-block:10px;background:var(--fond);border-bottom:1px solid var(--trait);box-shadow:0 0 0 100vmax var(--fond);clip-path:inset(0 -100vmax)}
+/* Menu : le même sur les quatre pages, il suit la lecture. Les pages sont dans une réglette, la page en cours en plein,
+   et un trait pêche mesure la lecture. Sur petit écran, les pages se rangent derrière le bouton « Menu ». */
+.menu{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-block:10px;background:var(--fond);border-bottom:1px solid var(--trait);box-shadow:0 0 0 100vmax var(--fond);clip-path:inset(0 -100vmax -3px)}
+.menu::after{content:"";position:absolute;inset:auto 0 -1px;height:3px;background:var(--peche);transform-origin:left;transform:scaleX(var(--lu,0))}
 .marque{display:flex;align-items:center;gap:10px;font-weight:600;font-size:var(--t4);text-decoration:none}
-.menu nav{display:flex;gap:6px 24px;font-size:var(--t2)}
-.menu nav a{text-decoration:none;padding:8px 2px;border-bottom:1px solid transparent;transition:border-color .15s}
-.menu nav a:hover{border-bottom-color:currentColor}
+.menu nav{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--surface-2);font-size:var(--t2)}
+.menu nav a{text-decoration:none;padding:6px 14px;border-radius:999px;transition:background .15s,color .15s}
+.menu nav a:hover{background:var(--surface)}
+.menu nav a[aria-current="page"]{background:var(--texte);color:var(--fond)}
+.menu .bouton,.m-plus{border-radius:999px}
+.m-plus{display:none;align-items:center;min-height:40px;margin-left:auto;padding:7px 14px;border:1px solid var(--trait);background:transparent;font-size:var(--t2)}
 
 /* Haut de page : le cadre peint */
 .haut{position:relative;z-index:1;margin-top:14px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding-bottom:clamp(150px,15vw,178px)}
@@ -120,70 +125,133 @@ h3{font-size:var(--t5);line-height:1.16}
 .e-fin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 16px;border-top:1px solid var(--trait);font-size:var(--t2)}
 .rejouer{min-height:40px;padding:7px 14px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;font-size:var(--t2);transition:background .15s,border-color .15s}
 .rejouer:hover{background:var(--surface-2);border-color:var(--doux)}
-.liens-poles{position:relative;width:max-content;max-width:calc(100% - 32px);margin:-22px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--trait);border-radius:var(--r2);box-shadow:0 14px 34px -14px rgba(0,0,0,.7)}
+.liens-poles{position:relative;width:max-content;max-width:calc(100% - 32px);margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--trait);border-radius:var(--r2);box-shadow:0 14px 34px -14px rgba(0,0,0,.7)}
 .liens-poles a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 13px;border-radius:var(--r1);text-decoration:none;font-size:var(--t2);transition:background .15s}
 .liens-poles a:hover{background:var(--surface-2)}
 .liens-poles .ico{color:var(--pc)}
+
+/* Le tapis roulant : il traverse la page d'un bord à l'autre. Les chiffres de Nils Davoine sont les étiquettes des colis.
+   Les colis avancent dans .tp-piste ; les rouleaux d'acier tournent sur place, entre deux longerons boulonnés. */
+@property --tour{syntax:"<angle>";inherits:false;initial-value:0deg}
+.tapis{position:relative;width:100vw;margin:26px 0 0 calc(50% - 50vw);padding-top:36px;overflow-x:auto;
+  --r1:#f5f7f9;--r2:#7c8894;--r3:#e3e8ec;--r4:#667280;--axe:#2b323a;--boulon:#4c5661;--pied-a:#7b8794;--pied-b:#cfd6dc;
+  --veine:linear-gradient(transparent,transparent);
+  --longeron:linear-gradient(180deg,#f1f4f6,#c2cad2 30%,#98a3ae 62%,#75818d)}
+.tapis.defile{overflow:hidden}
+.tp-piste{position:relative;z-index:1;display:flex;width:max-content}
+.tp-piste ul{display:flex;flex:none;align-items:flex-end}
+.tp-piste li{--k1:#dcbd8e;--k2:#c5a06b;position:relative;flex:none;margin:0 34px 0 16px;padding:11px 60px 13px 12px;
+  background:linear-gradient(90deg,transparent calc(100% - 46px),rgba(248,238,212,.82) calc(100% - 46px) calc(100% - 22px),transparent calc(100% - 22px)),linear-gradient(180deg,var(--k1),var(--k2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -2px 0 rgba(90,60,20,.22),0 13px 12px -11px rgba(8,12,18,.75)}
+.tp-piste li::before{content:"";position:absolute;inset:auto 0 100% 0;height:12px;transform:skewX(-45deg);transform-origin:bottom left;background:linear-gradient(90deg,transparent calc(100% - 46px),rgba(252,246,228,.9) calc(100% - 46px) calc(100% - 22px),transparent calc(100% - 22px)),#ead2a8}
+.tp-piste li::after{content:"";position:absolute;inset:0 auto 0 100%;width:12px;transform:skewY(-45deg);transform-origin:top left;background:linear-gradient(180deg,#b08c5a,#9c7848)}
+.tp-piste li:nth-child(3n+2){padding-top:24px}
+.tp-piste li:nth-child(4n+3){--k1:#d3b381;--k2:#b9935d}
+.tp-piste p{display:flex;flex-direction:column;gap:2px;width:max-content;max-width:158px;padding:7px 10px 8px;border-radius:2px;background:#fbf8f1;box-shadow:0 1px 1.5px rgba(60,40,10,.4);color:#1d1a14}
+.tp-piste p::after{content:"";height:7px;margin-top:4px;opacity:.72;background:repeating-linear-gradient(90deg,#1d1a14 0 2px,transparent 2px 3px,#1d1a14 3px 4px,transparent 4px 7px,#1d1a14 7px 10px,transparent 10px 12px)}
+.tp-piste b{font-family:var(--titre);font-weight:500;font-size:var(--t5);line-height:1;font-variant-numeric:tabular-nums}
+.tp-piste span{font-size:var(--t1);line-height:1.25}
+.tapis.defile .tp-piste{animation:defile 46s linear infinite}
+.tapis.defile:hover .tp-piste,.tapis:hover .tp-rouleaux{animation-play-state:paused}
+@keyframes defile{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes tour{to{--tour:360deg}}
+.tp-rouleaux,.tp-chassis{display:block;position:relative}
+.tp-rouleaux{--pas:22px;height:22px;animation:tour .95s linear infinite;
+  background:radial-gradient(circle,var(--axe) 0 2px,transparent 2.6px) 0 0/var(--pas) 22px,conic-gradient(from var(--tour),var(--r1),var(--r2) 25%,var(--r3) 50%,var(--r4) 75%,var(--r1)) 0 0/var(--pas) 22px;
+  -webkit-mask:radial-gradient(circle 10.4px at 50% 50%,#000 95%,transparent) 0 0/var(--pas) 22px;mask:radial-gradient(circle 10.4px at 50% 50%,#000 95%,transparent) 0 0/var(--pas) 22px}
+.tp-chassis{z-index:2;height:48px;margin-top:-11px;background:
+  radial-gradient(circle,var(--boulon) 0 1.7px,transparent 2.2px) 12px 5px/72px 6px repeat-x,
+  var(--veine) 0 0/100% 16px no-repeat,
+  var(--longeron) 0 0/100% 16px no-repeat,
+  repeating-linear-gradient(90deg,transparent 0 168px,var(--pied-a) 168px 171px,var(--pied-b) 171px 177px,var(--pied-a) 177px 180px,transparent 180px 360px) 0 16px/100% 28px no-repeat,
+  repeating-linear-gradient(90deg,transparent 0 158px,var(--pied-a) 158px 190px,transparent 190px 360px) 0 100%/100% 4px no-repeat}
 
 /* Sections de lecture */
 .bloc{padding-block:88px 0;display:flex;flex-direction:column;gap:32px;scroll-margin-top:64px}
 .tete{display:flex;flex-direction:column;gap:12px;max-width:62ch}
 .tete p:not(.etiq){color:var(--doux)}
 
-/* Les six pôles */
-.poles{position:relative}
-.pole{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px 64px;align-items:start;padding-block:56px;border-top:1px solid var(--trait);scroll-margin-top:64px}
-.poles[data-mode="file"] .pole:nth-of-type(even) .texte{order:2}
-.pole .texte{display:flex;flex-direction:column;gap:16px;min-width:0}
+/* Les six pôles à la file, chacun dans sa carte ; à gauche, le tapis roulant vu de dessus, que le colis descend avec la lecture */
+.file{position:relative;--g:100px;display:flex;flex-direction:column;gap:16px;padding-left:var(--g)}
+.pole{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px 48px;align-items:start;padding:26px 28px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--surface);scroll-margin-top:72px;transition:border-color .3s}
+.pole.ici{border-color:var(--pc)}
+.pole .texte{display:flex;flex-direction:column;gap:12px;min-width:0}
 .pole .etiq{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--pc);padding:5px 10px;border-radius:var(--r1);background:var(--surface);background:color-mix(in srgb,var(--pc) 14%,transparent)}
 .pole .etiq .ico{width:16px;height:16px}
-.pole .texte>p:not(.etiq){color:var(--doux);max-width:54ch}
-.chiffres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px;margin-top:6px}
-.chiffres li{display:flex;flex-direction:column;gap:5px;border-top:1px solid var(--trait);padding-top:14px}
-.chiffres strong{font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1;color:var(--pc);font-variant-numeric:tabular-nums}
-.chiffres span{font-size:var(--t2)}
+.pole .texte>p:not(.etiq){color:var(--doux);max-width:54ch;font-size:var(--t2)}
+.chiffres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;margin-top:2px}
+.chiffres li{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--trait);padding-top:10px}
+.chiffres strong{font-family:var(--titre);font-weight:500;font-size:var(--t5);line-height:1;color:var(--pc);font-variant-numeric:tabular-nums}
+.chiffres span{font-size:var(--t2);line-height:1.4}
 .pole .lien{align-self:flex-start;font-size:var(--t2)}
+.chemin{position:absolute;inset:0 auto 0 0;width:var(--g);pointer-events:none}
+.c-voie{position:absolute;inset:0 auto 0 calc(50% - 22px);width:44px;border-radius:3px;box-shadow:0 0 0 1px rgba(16,24,32,.35),6px 0 12px -6px rgba(16,24,32,.35)}
+.c-voie::before,.c-voie::after{content:"";position:absolute;top:0;bottom:0;width:6px}
+.c-voie::before{left:0}
+.c-voie::after{right:0}
+.colis{position:sticky;top:calc(50vh - 19px);z-index:2;display:grid;place-items:center;width:38px;height:38px;margin-inline:auto;border-radius:3px;color:#2a2114;font:600 12px/1 var(--etiq);
+  background:radial-gradient(circle,#fbf8f1 0 10px,rgba(60,40,10,.3) 10.5px,transparent 11.5px),linear-gradient(90deg,transparent 14px,rgba(250,242,220,.92) 14px 24px,transparent 24px),linear-gradient(135deg,#e2c597,#c29c66);
+  box-shadow:0 0 0 1px #94733f,0 8px 9px -2px rgba(16,24,32,.55),inset 0 1px 0 rgba(255,255,255,.5)}
+.noeud{position:absolute;left:calc(var(--g) / -2 - 36px);top:34px;z-index:3;width:72px;height:12px;border-radius:2px}
+.noeud::before,.noeud::after{content:"";position:absolute}
+.noeud .ico{position:absolute;left:calc(50% - 14px);top:-8px;width:28px;height:28px;padding:5px;border-radius:50%;transition:color .3s,background .3s,box-shadow .3s,border-color .3s}
+/* l'acier : des rouleaux entre deux longerons, un portique boulonné par pôle, un voyant qui s'allume au passage du colis */
+.c-voie{background:repeating-linear-gradient(180deg,#39424c 0 1.5px,#8d99a6 2.5px,#f4f7f9 5px,#c3ccd4 8px,#6d7884 11px,#39424c 12.5px,#1d2329 13px 15px)}
+.c-voie::before,.c-voie::after{background:radial-gradient(circle,#4c5661 0 1.3px,transparent 1.8px) 0 10px/6px 60px repeat-y,linear-gradient(90deg,#7b8794,#f1f4f6 45%,#98a3ae)}
+.noeud{background:linear-gradient(180deg,#f6f8fa,#b5bfc8 45%,#75818d);box-shadow:0 7px 8px -3px rgba(16,24,32,.5)}
+.noeud::before,.noeud::after{top:-6px;width:14px;height:24px;border-radius:2px;background:radial-gradient(circle,#3d4650 0 1.3px,transparent 1.8px) 0 0/7px 12px,linear-gradient(180deg,#e3e8ec,#8b96a2);box-shadow:0 3px 4px -1px rgba(16,24,32,.45)}
+.noeud::before{left:-5px}
+.noeud::after{right:-5px}
+.noeud .ico{background:#1b222b;border:2px solid #c3ccd4;color:#75818d}
+.passe .noeud .ico{color:var(--pe);box-shadow:0 0 0 2px #1b222b,0 0 14px 1px var(--pe)}
+
+/* Le menu de contact : un bouton rond, pêche, qui bat doucement en bas à droite de chaque page */
+.flot{position:fixed;z-index:25;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.flot-bouton{position:relative;display:grid;place-items:center;width:60px;height:60px;padding:0;border:0;border-radius:50%;background:var(--peche);color:var(--sur-peche);box-shadow:0 16px 30px -10px rgba(8,12,18,.6);transition:transform .15s,background .15s}
+.flot-bouton:hover{background:var(--peche-survol);transform:translateY(-2px)}
+.flot-bouton .ico{width:26px;height:26px}
+.flot-bouton span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.flot-bouton::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--peche);animation:f-onde 2.4s ease-out infinite}
+@keyframes f-onde{from{scale:1;opacity:.9}to{scale:1.7;opacity:0}}
+.flot-menu{display:flex;flex-direction:column;gap:10px;width:min(300px,calc(100vw - 32px));padding:18px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);box-shadow:0 24px 50px -18px rgba(8,12,18,.8)}
+.flot-tel{font-family:var(--titre);font-size:var(--t5);line-height:1.1;text-decoration:none;font-variant-numeric:tabular-nums;user-select:all}
+.flot-tel:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.flot-menu .bouton{width:100%}
+
+/* Le verre : sur la peinture, l'écran d'exemple, les citations et les textes sont des vitres dépolies ; la peinture se devine derrière */
+.ecran,.liens-poles,.citation:not(.c-clair) .c-texte,.p-texte,.fin::after{-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(243,241,236,.28)}
+.ecran,.liens-poles{background:rgba(12,18,26,.46);box-shadow:0 30px 80px -30px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.2)}
+.e-mail,.e-reponse{background:rgba(24,37,51,.5)}
+.citation:not(.c-clair) .c-texte,.p-texte,.fin::after{border-radius:var(--r2);background:rgba(12,18,26,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.citation:not(.c-clair) .c-texte,.p-texte{padding:28px 32px}
+.p-texte{align-self:flex-start;max-width:min(100%,780px)}
+.fin::after{content:"";position:absolute;inset:40px auto 40px calc(clamp(20px,5vw,64px) - 24px);width:min(608px,calc(100% - 2 * clamp(20px,5vw,64px) + 48px))}
+.fin>*:not(.fond):not(.voile){z-index:1}
+.haut .voile,.citation .voile,.fin .voile,.p-haut .voile{opacity:.5}
 
 /* Le trajet d'un pôle : cinq étapes cliquables ; l'IA avance seule jusqu'à l'étape où une personne valide */
-.trajet{--pc:var(--pe);display:flex;flex-direction:column;gap:16px;padding:18px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);min-width:0}
+.trajet{--pc:var(--pe);display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);min-width:0}
 .t-etapes{display:flex;gap:6px}
-.t-etapes li{flex:1 1 auto;min-width:0}
+/* seule l'étape en cours écrit son nom ; les autres gardent leur numéro, et leur nom reste lu par les lecteurs d'écran */
+.t-etapes li{flex:none;min-width:0}
+.t-etapes li.ici{flex:1 1 0}
+.t-etapes li:not(.ici) span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .t-etapes button{width:100%;height:100%;display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--trait);border-radius:var(--r1);background:transparent;color:var(--doux);font-size:var(--t1);line-height:1.25;text-align:left;transition:border-color .15s,color .15s,background .15s}
 .t-etapes button:hover{border-color:var(--doux);color:var(--texte)}
 .t-etapes b{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;font-weight:500}
 .t-etapes .fait button{color:var(--texte)}
 .t-etapes .fait b{background:var(--pc);border-color:var(--pc);color:var(--e-fond)}
 .t-etapes .ici button{color:var(--texte);border-color:var(--pc);background:var(--surface);background:color-mix(in srgb,var(--pc) 16%,transparent)}
-.t-carte{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:var(--r1);background:var(--surface);min-height:188px;font-size:var(--t2)}
+.t-carte{display:flex;flex-direction:column;gap:7px;padding:12px 14px;border-radius:var(--r1);background:var(--surface);min-height:156px;font-size:var(--t2);line-height:1.45}
 .t-carte [data-de]{opacity:.42;transition:opacity .4s}
 .t-carte [data-de].vu{opacity:1}
 .t-carte b{font-weight:500}
 .t-carte q{quotes:"«\00a0" "\00a0»";color:var(--doux)}
 .t-carte .fichier{font-family:var(--etiq);font-size:var(--t1);overflow-wrap:anywhere}
 .t-carte .visuel{height:54px;border-radius:var(--r1);background:linear-gradient(135deg,var(--pc),var(--surface-2))}
-.t-phrase{font-size:var(--t4);line-height:1.35;min-height:2.7em;text-wrap:pretty}
+.t-phrase{font-size:var(--t3);line-height:1.4;min-height:2.8em;text-wrap:pretty}
 
-/* Le rail : sur grand écran seulement, il part du bâtiment et se remplit à mesure qu'on descend */
-.rail,.coude,.raccord,.noeud{display:none}
-@media (min-width:1320px){
-  .poles[data-mode="file"] .raccord{display:block;position:absolute;left:-24px;right:5%;top:0;height:44px;border:0 solid var(--trait);border-bottom-width:4px;border-right-width:4px;border-bottom-right-radius:18px}
-  .poles[data-mode="file"] .coude{display:block;position:absolute;left:-46px;top:40px;width:24px;height:24px;border:0 solid var(--trait);border-top-width:4px;border-left-width:4px;border-top-left-radius:18px}
-  .poles[data-mode="file"] .rail{display:block;position:absolute;left:-46px;top:62px;bottom:0;width:4px;border-radius:2px;background:var(--trait);overflow:hidden}
-  .rail i{display:block;width:100%;height:0;background:var(--doux)}
-  .poles[data-mode="file"] .noeud{display:grid;place-items:center;position:absolute;left:-63px;top:52px;width:38px;height:38px;border-radius:var(--r2);background:var(--fond);border:2px solid var(--trait);color:var(--doux);transition:border-color .3s,color .3s}
-  .poles[data-mode="file"] .pole.passe .noeud{border-color:var(--pc);color:var(--pc)}
-  .poles[data-mode="file"] .pole .etiq .ico{display:none}
-}
-
-/* Variante « un pôle à la fois » : de vrais onglets */
-.onglets{display:flex;flex-wrap:wrap;gap:6px}
-.onglets button{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid var(--trait);border-radius:var(--r1);background:transparent;font-size:var(--t2);color:var(--doux);transition:border-color .15s,color .15s,background .15s}
-.onglets button:hover{color:var(--texte);border-color:var(--doux)}
-.onglets button[aria-selected="true"]{color:var(--texte);border-color:var(--pc);box-shadow:inset 0 -3px 0 var(--pc);background:var(--surface)}
-.onglets .ico{color:var(--pc)}
-.poles[data-mode="onglets"] .pole{border-top:0;padding-block:8px 0}
-
-/* Les chiffres : un simulateur, un seul grand nombre */
+/* Le simulateur (sur sa page) : un seul grand nombre */
 .simu{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px 56px;align-items:start}
 .reglages{display:flex;flex-direction:column;gap:14px}
 .reglage{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:4px 14px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--trait)}
@@ -208,29 +276,42 @@ h3{font-size:var(--t5);line-height:1.16}
 .legende b{font-weight:500;font-variant-numeric:tabular-nums}
 .mention{font-size:var(--t1);color:var(--doux);max-width:90ch}
 
-/* Comment ça se passe */
-.marche{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.marche li{display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--texte);padding-top:14px}
-.marche b{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;color:var(--doux);font-weight:400}
+/* Comment ça se passe : un trait se trace de gauche à droite, les quatre stations s'allument une à une */
+.marche{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px;padding-top:27px}
+.marche::before{content:"";position:absolute;inset:26px 0 auto;height:3px;border-radius:2px;background:var(--texte);transform-origin:left;transition:transform 1.9s cubic-bezier(.4,.1,.2,1)}
+.marche li{display:flex;flex-direction:column;gap:12px}
+.m-etq{display:flex;flex-direction:column;gap:14px}
+.marche b{position:relative;display:grid;place-items:center;width:54px;height:54px;margin-top:-27px;border-radius:50%;background:var(--texte);box-shadow:0 0 0 8px var(--fond);font-family:var(--titre);font-weight:500;font-size:var(--t5);color:var(--fond);transition:scale .5s cubic-bezier(.3,1.7,.5,1)}
+.marche li:last-child b{background:var(--peche);color:var(--sur-peche)}
 .marche h3{font-size:var(--t4)}
 .marche p{font-size:var(--t2);color:var(--doux)}
-.prix{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 32px;align-items:center;padding:22px 24px;border-radius:var(--r2);background:var(--surface)}
+.marche :is(h3,p){transition:opacity .6s,translate .6s}
+.marche li:nth-child(1) :is(b,h3,p){transition-delay:.2s}
+.marche li:nth-child(2) :is(b,h3,p){transition-delay:.65s}
+.marche li:nth-child(3) :is(b,h3,p){transition-delay:1.1s}
+.marche li:nth-child(4) :is(b,h3,p){transition-delay:1.55s}
+.anime:not(.vu) .marche::before{transform:scaleX(0)}
+.anime:not(.vu) .marche b{scale:0}
+.anime:not(.vu) .marche :is(h3,p){opacity:0;translate:0 12px}
+.prix{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 32px;align-items:center;padding:22px 24px;border-radius:var(--r2);background:var(--surface)}
 .prix h3{font-size:var(--t4);margin-bottom:6px}
+.prix-70{font-family:var(--titre);font-weight:500;font-size:var(--t7);line-height:1;font-variant-numeric:tabular-nums}
 .prix p{font-size:var(--t2);color:var(--doux);max-width:75ch}
 
-/* Vos données, et qui est derrière */
+/* Vos données : les trois engagements sur une feuille, en articles, signée ; à côté, qui est derrière */
 .duo{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px 56px;align-items:start}
-.engagements{display:flex;flex-direction:column;gap:18px}
-.engagements li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px}
-.engagements .ico{color:var(--doux);margin-top:3px}
+.engagements{position:relative;display:flex;flex-direction:column;counter-reset:art;padding:36px 36px 92px;border-radius:3px;background:var(--papier);color:var(--sur-papier);box-shadow:0 26px 40px -24px rgba(16,24,32,.5),0 0 0 1px #e4dcc6;--doux:#5c5444}
+.engagements::before{content:"Engagements écrits · remis avant tout branchement";padding-bottom:14px;border-bottom:1px solid var(--sur-papier);font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase}
+.engagements li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 18px;counter-increment:art;padding:16px 0;border-bottom:1px dashed #cfc5ad}
+.engagements li::before{content:"Art. " counter(art);grid-row:1/3;padding-top:3px;font-family:var(--etiq);font-size:var(--t1);color:var(--doux)}
 .engagements b{font-weight:600}
 .engagements p{grid-column:2;color:var(--doux);font-size:var(--t2)}
+.engagements::after{content:"Nils Davoine";position:absolute;right:40px;bottom:26px;padding:0 20px 2px;border-bottom:1px solid var(--sur-papier);rotate:-4deg;font-family:var(--titre);font-style:italic;font-size:var(--t5);transition:clip-path 1.3s ease-out .5s}
+.anime:not(.vu) .engagements::after{clip-path:inset(0 100% 0 0)}
+.anime.vu .engagements::after{clip-path:inset(0)}
 .qui{display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--r2);background:var(--surface)}
 .qui h3{font-size:var(--t4)}
 .qui p:not(.etiq){font-size:var(--t2);color:var(--doux)}
-.parcours{display:flex;flex-direction:column;gap:10px;margin-top:4px}
-.parcours li{font-size:var(--t2);color:var(--doux);padding-top:10px;border-top:1px solid var(--trait)}
-.parcours b{color:var(--texte);font-weight:600}
 
 /* Fin de page : la peinture revient, on arrive au bâtiment */
 .fin{position:relative;margin-top:88px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding:64px clamp(20px,5vw,64px);display:flex;flex-direction:column;align-items:flex-start;gap:18px;scroll-margin-top:72px}
@@ -268,6 +349,18 @@ h3{font-size:var(--t5);line-height:1.16}
 .mot{font-size:var(--t5);line-height:1.14}
 .mot .eux{font-family:var(--corps);font-size:var(--t2);font-weight:400;letter-spacing:0;line-height:1.4;color:var(--doux);margin-bottom:6px}
 
+/* Les retours écrits des entreprises accompagnées : une mise en page de journal, les mots qui comptent se surlignent à la lecture */
+.avis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 64px}
+.avis figure{position:relative;display:flex;flex-direction:column;gap:16px;margin:0;padding-top:34px;border-top:2px solid var(--texte)}
+.avis figure::before{content:"«";position:absolute;right:0;top:-10px;font-family:var(--titre);font-size:120px;line-height:1;color:var(--trait)}
+.avis blockquote{margin:0;font-size:var(--t3);line-height:1.65}
+.avis blockquote b{display:block;margin-bottom:10px;padding-right:86px;font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1.15;letter-spacing:-.012em;text-wrap:balance}
+.avis figcaption{margin-top:auto;padding-top:12px;border-top:1px solid var(--trait);font-size:var(--t1);color:var(--doux)}
+.avis mark{padding:0 2px;color:inherit;background:linear-gradient(rgba(247,176,146,.65),rgba(247,176,146,.65)) no-repeat 0 88%/100% 62%;transition:background-size 1s cubic-bezier(.3,.7,.2,1) .3s}
+.avis mark:nth-of-type(2){transition-delay:.9s}
+.avis mark:nth-of-type(3){transition-delay:1.5s}
+.anime:not(.vu) .avis mark{background-size:0% 62%}
+
 /* Pied de page */
 .pied{padding-block:40px 0;display:flex;flex-direction:column;gap:12px;font-size:var(--t2);color:var(--doux)}
 .pied strong{color:var(--texte);font-weight:600}
@@ -276,23 +369,42 @@ h3{font-size:var(--t5);line-height:1.16}
 .pied summary:hover{text-decoration:underline;text-underline-offset:4px}
 .pied details p{margin-top:8px;max-width:80ch}
 
-@media (max-width:1180px){
-  .t-etapes li{flex:none}
-  .t-etapes li.ici{flex:1 1 0}
-  .t-etapes li:not(.ici) span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (max-width:1100px){
+  .menu{gap:10px 12px}
+  .menu nav a{padding:6px 9px}
+}
+@media (max-width:1020px){
+  .menu nav{font-size:var(--t1)}
 }
 @media (max-width:900px){
-  .menu nav{display:none}
+  .menu{gap:8px 10px}
+  .m-plus{display:inline-flex}
+  .menu nav{display:none;order:5;flex-basis:100%;flex-direction:column;gap:0;padding:0 0 6px;border-radius:0;background:none;font-size:var(--t3)}
+  .menu.ouvert nav{display:flex}
+  .menu nav a,.menu nav a[aria-current="page"]{padding:12px 2px;border-radius:0;border-bottom:1px solid var(--trait);background:none;color:var(--texte)}
+  .menu nav a[aria-current="page"]{font-weight:600}
+  .fin::after{inset-block:24px 146px}
+  .citation:not(.c-clair) .c-texte,.p-texte{padding:22px 20px}
+  .avis{grid-template-columns:minmax(0,1fr)}
   .citation{margin-top:60px}
   .c-nuage{align-items:flex-start}
   .c-nuage .voile,.c-ciel .voile{background:linear-gradient(180deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.82) 70%,rgba(8,12,18,.5) 100%)}
   .c-clair{padding:40px 0}
   .liens-poles{display:grid;grid-template-columns:repeat(3,auto);margin-top:14px}
   .bloc{padding-block:60px 0;gap:26px}
-  .pole{grid-template-columns:minmax(0,1fr);padding-block:44px}
-  .poles[data-mode="file"] .pole:nth-of-type(even) .texte{order:0}
+  .pole{grid-template-columns:minmax(0,1fr);padding:30px 0 0;border:0;border-top:1px solid var(--trait);border-radius:0;background:none}
+  .file{--g:42px;gap:30px}
+  .c-voie{inset:0 auto 0 calc(50% - 15px);width:30px}
+  .c-voie::before,.c-voie::after,.file .c-voie::before,.file .c-voie::after{width:4px}
+  .colis{scale:.7}
+  .noeud{scale:.62}
   .simu,.duo,.prix{grid-template-columns:minmax(0,1fr)}
   .marche{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .marche{gap:30px 24px;padding-top:0}
+  .marche::before{display:none}
+  .marche b{margin-top:0}
+  .avis figure+figure{margin-top:40px}
+  .engagements{padding:26px 22px 84px}
   .fin{margin-top:60px;padding-block:48px 170px}
   .fin .voile{background:linear-gradient(180deg,rgba(8,12,18,.95) 0%,rgba(8,12,18,.9) 66%,rgba(8,12,18,.1) 100%)}
 }
@@ -306,7 +418,9 @@ h3{font-size:var(--t5);line-height:1.16}
   .e-corps{grid-template-columns:minmax(0,1fr)}
   .e-liste{display:none}
   .liens-poles{width:auto;margin:14px 16px 0;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .trajet{padding:14px}
+  .tapis{padding-top:30px}
+  .tp-piste li{margin:0 26px 0 10px;padding:9px 50px 11px 10px}
+  .tp-piste p{max-width:136px}
 }
 @media (max-width:520px){
   .chiffres,.marche{grid-template-columns:minmax(0,1fr)}
@@ -317,7 +431,7 @@ h3{font-size:var(--t5);line-height:1.16}
 </style>
 <style>
 /* Page « La vision ». Le motif vient de la peinture : un bâtiment aux fenêtres allumées. Six doutes, six fenêtres ;
-   à chaque réponse une fenêtre s'allume, et la page finit devant le bâtiment éclairé. Une teinte par doute. */
+   à chaque réponse une fenêtre s'allume, dans la scène du haut comme dans la page, qui finit devant le bâtiment éclairé. Une teinte par doute. */
 :root{--lumiere:#e0a13a}
 .sombre{--lumiere:#f5c96a}
 .fenetres{display:flex;gap:6px}
@@ -326,34 +440,71 @@ h3{font-size:var(--t5);line-height:1.16}
 .doute.vu .fenetres i.derniere{animation:allume 1.1s ease-out 1}
 @keyframes allume{0%{background:transparent;box-shadow:none}55%{background:var(--lumiere);box-shadow:0 0 18px 5px var(--lumiere)}100%{background:var(--lumiere);box-shadow:none}}
 
-/* Haut de page : le ciel de la peinture, le titre à gauche, les six doutes en fenêtres éteintes */
-.v-haut{position:relative;margin-top:14px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding:clamp(44px,6vw,84px) clamp(20px,5vw,64px) clamp(24px,3.4vw,44px);display:flex;flex-direction:column;gap:20px}
-.v-haut .fond{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
-.v-haut .fond{object-position:100% 44%;opacity:.95}
-.v-haut .voile{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,12,18,.92) 0%,rgba(8,12,18,.74) 44%,rgba(8,12,18,.16) 100%)}
-.v-haut>*:not(.fond):not(.voile){position:relative}
-.v-haut h1{max-width:16ch}
-.v-haut .chapo{font-size:var(--t4);line-height:1.45;color:var(--doux);max-width:54ch;text-wrap:pretty}
+/* Haut de page, « la grande scène » : la nuit occupe tout le haut de page, sans cadre. Le texte est posé sur le ciel ;
+   à droite « la veille » : le bâtiment, où chaque doute levé allume une fenêtre. Le décor se prolonge sous le texte. */
+.v-haut{position:relative;margin-top:14px;border-radius:var(--r3);overflow:hidden;background:#103449;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);align-items:start}
+.v-haut h1{font-size:var(--t6)}
+.v-texte{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;padding:34px 0 0 48px}
+.v-haut .chapo{font-size:var(--t3);line-height:1.5;color:var(--doux);max-width:54ch;text-wrap:pretty}
 .v-haut .chapo b{color:var(--texte);font-weight:500}
 .signe{font-size:var(--t2);color:var(--doux)}
 .signe b{color:var(--peche);font-weight:600}
-.sommaire{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}
-.sommaire a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;padding:14px 16px;border:1px solid rgba(243,241,236,.2);border-radius:var(--r1);background:rgba(12,18,26,.64);text-decoration:none;font-size:var(--t2);transition:border-color .2s,background .2s,transform .1s}
-.sommaire a:hover{border-color:var(--lumiere);background:rgba(12,18,26,.86)}
-.sommaire a:active{transform:translateY(1px)}
-.sommaire i{grid-row:span 2;width:16px;height:16px;margin-top:3px;border-radius:2px;border:1.5px solid rgba(243,241,236,.5);transition:background .2s,border-color .2s,box-shadow .2s}
-.sommaire a:hover i,.sommaire a:focus-visible i{background:var(--lumiere);border-color:var(--lumiere);box-shadow:0 0 12px 2px rgba(245,201,106,.55)}
-.sommaire small{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase;color:var(--doux)}
+.veille{position:relative;--pc:var(--e-fact);--at:#16212d}
+.ve-texte{display:flex;flex-direction:column;align-items:center;gap:7px;min-height:126px;padding:14px 18px 4px;text-align:center}
+.ve-doute{font-family:var(--titre);font-weight:500;font-size:var(--t4);line-height:1.12;letter-spacing:-.012em;text-wrap:balance}
+.ve-doute.monte{animation:ve-monte .55s cubic-bezier(.2,.7,.2,1)}
+.ve-reponse{display:inline-flex;align-items:center;gap:7px;padding:5px 14px 5px 10px;border-radius:var(--r2);background:var(--pc);color:var(--e-fond);font-weight:600;font-size:var(--t2);line-height:1.3;text-align:left;opacity:0;translate:0 10px;scale:.85;transition:opacity .25s,translate .45s cubic-bezier(.2,1.5,.4,1),scale .45s cubic-bezier(.2,1.5,.4,1)}
+.ve-reponse.la{opacity:1;translate:0 0;scale:1}
+.ve-scene{display:block;width:100%;height:auto;aspect-ratio:560/380;overflow:visible;stroke-linejoin:round;stroke-linecap:round}
+.ve-scene .k{stroke:var(--at);stroke-width:3}
+.ve-scene .vitre{fill:#1b2733;transition:fill .45s}
+.ve-scene .vitre.allumee{fill:var(--or)}
+.ve-scene .vitre.eclat{fill:var(--pc)}
+.ve-scene .halo{fill:var(--or);opacity:0;transition:opacity .8s}
+.ve-scene .halo.allumee{opacity:.3}
+.ve-scene text{font-family:var(--titre);font-weight:600;font-size:44px;text-anchor:middle;fill:var(--peche)}
+.ve-etoile{transform-box:fill-box;transform-origin:center;animation:ve-brille 3.4s ease-in-out infinite}
+.ve-flotte{animation:ve-flotte 2.4s ease-in-out infinite}
+.ve-env{animation:ve-roule 22s linear infinite}
+@keyframes ve-monte{from{opacity:0;translate:0 14px}}
+@keyframes ve-brille{0%,100%{opacity:.3;scale:.7}50%{opacity:1;scale:1}}
+@keyframes ve-flotte{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes ve-roule{from{translate:-900px 0}to{translate:620px 0}}
+.ve-cmd{position:absolute;inset:auto 0 0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 12px;background:rgba(12,18,26,.6);font-size:var(--t2)}
+.ve-cmd button.ve-pause{min-height:36px;padding:5px 12px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;font-size:var(--t2)}
+.ve-points{display:flex;gap:2px}
+.ve-points button{display:grid;place-items:center;width:28px;height:32px;padding:0;border:0;background:none}
+.ve-points i{width:14px;height:14px;border-radius:2px;border:1.5px solid var(--doux);transition:background .3s,border-color .3s,box-shadow .3s}
+.ve-points .fait i{background:var(--lumiere);border-color:var(--lumiere)}
+.ve-points [aria-current] i{border-color:var(--pc);box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 35%,transparent)}
 .menu nav a[aria-current="page"]{border-bottom-color:currentColor}
 
-/* Un doute : à gauche la question et la conviction (elles restent en vue), à droite la réponse et son illustration */
-.doute{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:24px 64px;align-items:start;margin-top:96px;scroll-margin-top:84px}
-.doute .cote{display:flex;flex-direction:column;gap:14px;position:sticky;top:88px}
+/* Les six doutes en classeur : les six questions à gauche, une seule réponse à l'écran. Sans programme, les six réponses se suivent. */
+.doutes{margin-top:64px;scroll-margin-top:84px}
+.doutes.pret{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0 48px;align-items:start}
+.v-nav{display:flex;flex-direction:column;gap:4px;position:sticky;top:88px}
+.v-nav button{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px;align-items:baseline;padding:12px 14px;border:0;border-radius:var(--r2);background:none;text-align:left;font-size:var(--t2);color:var(--doux);transition:background .2s,color .2s}
+.v-nav button:hover{background:var(--surface-2);color:var(--texte)}
+.v-nav button[aria-current="true"]{background:var(--surface);box-shadow:0 0 0 1px var(--trait);color:var(--texte);font-weight:500}
+.v-nav b{font-family:var(--titre);font-weight:500;font-size:var(--t4)}
+.doute{scroll-margin-top:84px}
+.doute+.doute{margin-top:64px}
+.pret .doute{grid-column:2;margin-top:0}
+.pret .doute:not(.actif){display:none}
+.doute .cote{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .doute .etiq{align-self:flex-start;color:var(--pc);padding:5px 10px;border-radius:var(--r1);background:var(--surface);background:color-mix(in srgb,var(--pc) 14%,transparent)}
 .doute h2{font-family:var(--corps);font-size:var(--t3);font-weight:500;letter-spacing:0;line-height:1.4;color:var(--doux)}
 .doute .conviction{font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1.1;letter-spacing:-.012em;text-wrap:balance}
-.doute .reponse{display:flex;flex-direction:column;gap:18px;min-width:0}
+.doute .reponse{display:flex;flex-direction:column;gap:14px;min-width:0}
 .doute .reponse>p{max-width:62ch}
+/* à chaque doute ouvert, la réponse monte par morceaux et les lignes de la carte arrivent une à une */
+.doute .reponse>*,.carte-v .ligne{transition:opacity .6s,translate .6s cubic-bezier(.2,.8,.2,1)}
+.doute .reponse>:nth-child(2),.carte-v .ligne:nth-of-type(2){transition-delay:.12s}
+.doute .reponse>:nth-child(3),.carte-v .ligne:nth-of-type(3){transition-delay:.24s}
+.doute .reponse>:nth-child(n+4),.carte-v .ligne:nth-of-type(n+4){transition-delay:.36s}
+.anime .doute:not(.vu) .reponse>*{opacity:0;translate:0 18px}
+.anime .doute:not(.vu) .carte-v .ligne{opacity:0;translate:-14px 0}
+
 .points{display:flex;flex-direction:column;gap:12px}
 .points li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;font-size:var(--t2);color:var(--doux)}
 .points .ico{width:18px;height:18px;margin-top:3px;color:var(--pc)}
@@ -376,16 +527,13 @@ h3{font-size:var(--t5);line-height:1.16}
 .fin .fenetres i{border-color:var(--lumiere)}
 
 @media (max-width:900px){
-  .sommaire{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .doute{grid-template-columns:minmax(0,1fr);margin-top:64px}
-  .doute .cote{position:static}
-  .v-haut .voile{background:linear-gradient(180deg,rgba(8,12,18,.86) 0%,rgba(8,12,18,.8) 62%,rgba(8,12,18,.45) 100%)}
-}
-@media (max-width:560px){
-  .sommaire{grid-template-columns:minmax(0,1fr);gap:8px}
-  .sommaire a{align-items:center;padding:12px 14px}
-  .sommaire a small{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-  .sommaire i{grid-row:auto;margin-top:0}
+  .v-haut{grid-template-columns:minmax(0,1fr)}
+  .v-texte{padding:26px 18px 0}
+  .doutes.pret{grid-template-columns:minmax(0,1fr)}
+  .v-nav{position:static;flex-direction:row;overflow-x:auto;margin-bottom:22px}
+  .v-nav button{flex:none;max-width:230px}
+  .pret .doute{grid-column:1}
+  .ve-lire{display:none}
 }
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -397,6 +545,7 @@ h3{font-size:var(--t5);line-height:1.16}
   <symbol id="i-personne" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
   <symbol id="i-coche" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-ecrit" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
   <symbol id="i-oeil" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
 </svg>
 
@@ -404,36 +553,51 @@ h3{font-size:var(--t5);line-height:1.16}
   <a class="saut" href="#contenu">Aller au contenu</a>
 
   <header class="menu">
-    <a class="marque" href="index.html" aria-label="AiAllDesk, page d’accueil">
-      <svg width="30" height="29" viewBox="0 0 290 280" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M79 176V46a20 20 0 0 1 20-20h59l55 54v96z"/><path d="M158 26v44a10 10 0 0 0 10 10h45"/><rect x="24" y="200" width="242" height="58" rx="29" stroke-width="18"/></g><g fill="currentColor"><circle cx="78" cy="229" r="9"/><circle cx="145" cy="229" r="9"/><circle cx="212" cy="229" r="9"/></g></svg>
-      AiAllDesk
-    </a>
-    <nav aria-label="Pages du site">
-      <a href="#contenu" aria-current="page">La vision</a>
-      <a href="index.html#poles">Les six pôles</a>
-      <a href="index.html#chiffres">Les chiffres</a>
-    </nav>
+    <a class="marque" href="index.html" aria-label="AiAllDesk, page d’accueil"><svg width="30" height="29" viewBox="0 0 290 280" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M79 176V46a20 20 0 0 1 20-20h59l55 54v96z"/><path d="M158 26v44a10 10 0 0 0 10 10h45"/><rect x="24" y="200" width="242" height="58" rx="29" stroke-width="18"/></g><g fill="currentColor"><circle cx="78" cy="229" r="9"/><circle cx="145" cy="229" r="9"/><circle cx="212" cy="229" r="9"/></g></svg>AiAllDesk</a>
+    <button type="button" class="m-plus" aria-expanded="false" aria-controls="m-nav">Menu</button>
+    <nav id="m-nav" aria-label="Pages du site"><a href="index.html#poles">Ce que l’IA fait pour moi</a><a href="simulateur.html">Combien je gagne ?</a><a href="#contenu" aria-current="page">Est-ce que ça marche ?</a><a href="profil.html">Qui s’en occupe ?</a></nav>
     <a class="bouton plein petit" href="#contact">Audit gratuit</a>
   </header>
 
   <main id="contenu">
   <section class="v-haut sombre" aria-labelledby="titre">
-    <img class="fond" src="fond-tapis-court.jpg" alt="">
-    <div class="voile" aria-hidden="true"></div>
-    <p class="etiq">La vision</p>
-    <h1 class="deux" id="titre"><span>Votre bureau ne manque pas d’outils.</span> <span>Il manque de temps.</span></h1>
-    <p class="chapo">L’intelligence artificielle peut préparer les tâches qui se répètent dans une PME : facturer, classer, répondre, relancer. À une condition, qui résume toute ma façon de travailler : <b>elle prépare, une personne valide.</b> Voici ce que je crois, et ce à quoi je m’engage.</p>
-    <p class="signe">Par <b>Nils Davoine</b>, fondateur d’AiAllDesk, Luxembourg.</p>
-    <nav class="sommaire" aria-label="Six doutes, six réponses">
-      <a href="#resultat"><i aria-hidden="true"></i><small>Le résultat</small><span>Qu’est-ce que j’y gagne ?</span></a>
-      <a href="#preuve"><i aria-hidden="true"></i><small>La preuve</small><span>Qu’est-ce qui me prouve que cela marche ?</span></a>
-      <a href="#erreur"><i aria-hidden="true"></i><small>Les erreurs</small><span>Et si l’IA se trompe ?</span></a>
-      <a href="#donnees"><i aria-hidden="true"></i><small>Les données</small><span>Où vont mes données ?</span></a>
-      <a href="#mise-en-route"><i aria-hidden="true"></i><small>La mise en route</small><span>Est-ce compliqué à mettre en place ?</span></a>
-      <a href="#personne"><i aria-hidden="true"></i><small>La personne et le prix</small><span>Qui est en face de moi, et combien cela coûte ?</span></a>
-    </nav>
+    <div class="v-texte">
+      <p class="etiq">La vision</p>
+      <h1 class="deux" id="titre"><span>Votre bureau ne manque pas d’outils.</span> <span>Il manque de temps.</span></h1>
+      <p class="chapo">L’intelligence artificielle peut préparer les tâches qui se répètent dans une PME : facturer, classer, répondre, relancer. À une condition, qui résume toute ma façon de travailler : <b>elle prépare, une personne valide.</b> Voici ce que je crois, et ce à quoi je m’engage.</p>
+      <p class="signe">Par <b>Nils Davoine</b>, fondateur d’AiAllDesk, Luxembourg.</p>
+    </div>
+    <div class="veille" role="group" aria-label="Six doutes, six réponses, en images" hidden>
+      <div class="ve-texte"><p class="etiq ve-rang"></p><p class="ve-doute"></p><p class="ve-reponse"><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><span></span></p></div>
+        <svg class="ve-scene" viewBox="0 0 560 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="ve-ciel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#103449"/><stop offset=".55" stop-color="#27486f"/><stop offset=".85" stop-color="#5d4a87"/><stop offset="1" stop-color="#c4627f"/></linearGradient>
+            <linearGradient id="ve-champ" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c48f49"/><stop offset="1" stop-color="#7a5226"/></linearGradient>
+          </defs>
+          <rect x="-1500" width="3560" height="336" fill="url(#ve-ciel)"/>
+          <g fill="#f6efdc"><circle class="ve-etoile" cx="40" cy="30" r="1.6" style="animation-delay:-0s"/><circle class="ve-etoile" cx="108" cy="96" r="1.3" style="animation-delay:-1.2s"/><circle class="ve-etoile" cx="176" cy="22" r="1.5" style="animation-delay:-2.1s"/><circle class="ve-etoile" cx="438" cy="34" r="1.4" style="animation-delay:-0.6s"/><circle class="ve-etoile" cx="500" cy="92" r="1.6" style="animation-delay:-2.8s"/><circle class="ve-etoile" cx="540" cy="26" r="1.3" style="animation-delay:-1.7s"/><circle class="ve-etoile" cx="72" cy="168" r="1.2" style="animation-delay:-0.3s"/><circle class="ve-etoile" cx="486" cy="176" r="1.3" style="animation-delay:-2.4s"/></g>
+          <g fill="#33437f"><path id="ve-monts" d="M0 336V300Q70 268 150 292T330 286Q420 262 560 296V336z"/><use href="#ve-monts" x="-560"/><use href="#ve-monts" x="-1120"/><use href="#ve-monts" x="560"/></g>
+          <rect x="-1500" y="312" width="3560" height="24" fill="#263468"/>
+          <rect x="-1500" y="332" width="3560" height="48" fill="url(#ve-champ)"/>
+          <g class="ve-batiment">
+            <rect class="k" x="372" y="110" width="20" height="30" rx="2" fill="#46413d"/>
+            <rect class="k" x="150" y="150" width="260" height="188" rx="4" fill="#7d756c"/>
+            <rect x="364" y="154" width="44" height="182" fill="#16212d" opacity=".16"/>
+            <rect class="k" x="138" y="138" width="284" height="16" rx="4" fill="#46413d"/>
+            <rect class="halo" x="163" y="164" width="76" height="62" rx="10"/><rect class="halo" x="242" y="164" width="76" height="62" rx="10"/><rect class="halo" x="321" y="164" width="76" height="62" rx="10"/><rect class="halo" x="163" y="228" width="76" height="62" rx="10"/><rect class="halo" x="242" y="228" width="76" height="62" rx="10"/><rect class="halo" x="321" y="228" width="76" height="62" rx="10"/><rect class="k vitre" x="172" y="172" width="58" height="46" rx="3"/><rect class="k vitre" x="251" y="172" width="58" height="46" rx="3"/><rect class="k vitre" x="330" y="172" width="58" height="46" rx="3"/><rect class="k vitre" x="172" y="236" width="58" height="46" rx="3"/><rect class="k vitre" x="251" y="236" width="58" height="46" rx="3"/><rect class="k vitre" x="330" y="236" width="58" height="46" rx="3"/>
+            <rect class="k" x="150" y="300" width="260" height="14" fill="#5d5751"/>
+          </g>
+          <rect class="k" x="-1500" y="330" width="3560" height="12" rx="3" fill="#1b2733"/>
+          <path fill="none" stroke="#93a1ad" stroke-width="5" stroke-dasharray="0 36" d="M-1482 337H2040"/>
+          <g class="ve-env" style="animation-delay:-0s"><rect class="k" x="0" y="308" width="34" height="22" rx="2" fill="#f6efdc"/><path class="k" fill="none" stroke-width="2" d="M0 310l17 11l17 -11"/></g><g class="ve-env" style="animation-delay:-3.3s"><rect class="k" x="0" y="308" width="34" height="22" rx="2" fill="#f6efdc"/><path class="k" fill="none" stroke-width="2" d="M0 310l17 11l17 -11"/></g><g class="ve-env" style="animation-delay:-6.6s"><rect class="k" x="0" y="308" width="34" height="22" rx="2" fill="#f6efdc"/><path class="k" fill="none" stroke-width="2" d="M0 310l17 11l17 -11"/></g>
+          <g class="ve-eclats" opacity="0"><g transform="rotate(0) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(45) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(90) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(135) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(180) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(225) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(270) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g><g transform="rotate(315) translate(0 -46)"><path fill="var(--pc)" d="M0 -9l2.6 6.4l6.4 2.6l-6.4 2.6l-2.6 6.4l-2.6 -6.4l-6.4 -2.6l6.4 -2.6z"/></g></g>
+          <g class="ve-nuee"><g class="ve-flotte"><path class="k" fill="#2a3350" d="M-62 26a22 22 0 0 1 14 -38a30 30 0 0 1 56 -12a26 26 0 0 1 40 34a16 16 0 0 1 -2 16z"/><text x="0" y="22">?</text></g></g>
+        </svg>
+      <div class="ve-cmd"><div class="ve-points"></div><a class="lien ve-lire" href="#resultat">Lire la réponse</a><button type="button" class="ve-pause">Pause</button></div>
+    </div>
   </section>
 
+  <div class="doutes">
   <section class="doute" id="resultat" aria-labelledby="q-resultat" style="--pc:var(--p-fact);--pe:var(--e-fact)">
     <div class="cote">
       <div class="fenetres" role="img" aria-label="Premier doute sur six"><i class="allumee derniere"></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -451,9 +615,9 @@ h3{font-size:var(--t5);line-height:1.16}
       </ul>
       <div class="carte-v sombre">
         <header><span>Un exemple, calculé sur la page d’accueil</span><span class="ex">exemple</span></header>
-        <p><span class="gros-chiffre">77 jours</span></p>
+        <p><span class="gros-chiffre">77 jours</span></p>
         <p>de travail rendus par an à une société qui a une personne aux réponses clients, trois commerciaux, quatre heures de recrutement et quatre heures de rédaction par semaine.</p>
-        <a class="bouton" href="index.html#chiffres">Mettre vos nombres</a>
+        <a class="bouton" href="simulateur.html">Mettre vos nombres</a>
       </div>
       <p class="mesures">Ce que d’autres ont mesuré ailleurs : 15 % de demandes résolues en plus par heure avec un assistant (Brynjolfsson, Li et Raymond, Quarterly Journal of Economics, 2025) ; 40 % de temps en moins pour rédiger un texte de travail (Noy et Zhang, revue Science, 2023). Vos chiffres seront les vôtres.</p>
     </div>
@@ -480,6 +644,7 @@ h3{font-size:var(--t5);line-height:1.16}
         <div class="ligne"><span>Sofia Lopes · Rendez-vous de jeudi</span><span>réponse prête</span></div>
         <a class="bouton" href="index.html">Valider vous-même</a>
       </div>
+      <a class="lien" href="index.html#avis" style="align-self:flex-start">Lire deux retours d’entreprises accompagnées</a>
     </div>
   </section>
 
@@ -507,15 +672,6 @@ h3{font-size:var(--t5);line-height:1.16}
       <a class="bouton plein" href="#contact" style="align-self:flex-start">Demander un audit gratuit</a>
     </div>
   </section>
-
-  <figure class="citation sombre c-nuage">
-    <img class="fond" src="fond-tapis-court.jpg" alt="">
-    <div class="voile" aria-hidden="true"></div>
-    <div class="c-texte">
-      <blockquote><span class="eux">« Une agence vous envoie celui qui est libre.</span> <span class="moi">Vous, vous aurez l’expert. »</span></blockquote>
-      <figcaption><b>Nils Davoine</b>, fondateur d’AiAllDesk</figcaption>
-    </div>
-  </figure>
 
   <section class="doute" id="donnees" aria-labelledby="q-donnees" style="--pc:var(--p-docs);--pe:var(--e-docs)">
     <div class="cote">
@@ -564,15 +720,6 @@ h3{font-size:var(--t5);line-height:1.16}
     </div>
   </section>
 
-  <figure class="citation sombre c-ciel">
-    <img class="fond" src="fond-tapis-court.jpg" alt="">
-    <div class="voile" aria-hidden="true"></div>
-    <div class="c-texte">
-      <blockquote><span class="eux">« On vous promettra une IA qui ne se trompe jamais.</span> <span class="moi">Je vous promets quelqu’un qui vérifie. »</span></blockquote>
-      <figcaption><b>Nils Davoine</b>, fondateur d’AiAllDesk</figcaption>
-    </div>
-  </figure>
-
   <section class="doute" id="personne" aria-labelledby="q-personne" style="--pc:var(--p-recr);--pe:var(--e-recr)">
     <div class="cote">
       <div class="fenetres" role="img" aria-label="Sixième doute sur six"><i class="allumee"></i><i class="allumee"></i><i class="allumee"></i><i class="allumee"></i><i class="allumee"></i><i class="allumee derniere"></i></div>
@@ -592,6 +739,7 @@ h3{font-size:var(--t5);line-height:1.16}
         <div class="ligne meme"><span>Langues de travail</span><span>français, anglais, allemand</span></div>
       </div>
       <p>Ma méthode : je relie les logiciels que vous utilisez déjà à un seul outil, j’y branche l’IA (celle de Microsoft 365, ou un modèle qui tourne sur vos propres machines), puis je forme vos équipes.</p>
+      <a class="lien" href="profil.html" style="align-self:flex-start">Voir mon parcours en détail</a>
       <div class="carte-v sombre">
         <header><span>Votre interlocuteur, à chaque étape</span></header>
         <div class="ligne meme"><span>L’audit</span><span>Nils Davoine</span></div>
@@ -607,13 +755,7 @@ h3{font-size:var(--t5);line-height:1.16}
       <a class="bouton plein" href="#contact" style="align-self:flex-start">Demander un audit gratuit</a>
     </div>
   </section>
-
-  <figure class="citation c-clair">
-    <div class="c-texte">
-      <blockquote><span class="eux">« Chez une agence, votre projet change de mains.</span> <span class="moi">Avec moi, il n’en a qu’une paire. »</span></blockquote>
-      <figcaption><b>Nils Davoine</b>, fondateur d’AiAllDesk</figcaption>
-    </div>
-  </figure>
+  </div>
 
   <section class="fin sombre" id="contact" aria-labelledby="t-contact">
     <img class="fond" src="fond-tapis-court.jpg" alt="Un petit bâtiment aux fenêtres allumées, au bout d’un tapis roulant, au crépuscule.">
@@ -636,6 +778,39 @@ h3{font-size:var(--t5);line-height:1.16}
     <p><strong>AiAllDesk</strong>, société en cours de constitution, Luxembourg. Texte de Nils Davoine. Les exemples d’écran et les noms qu’ils montrent sont inventés.</p>
     <p><a class="lien" href="index.html">Retour à la page d’accueil</a></p>
   </footer>
+  <div class="flot">
+    <div class="flot-menu sombre" id="flot-menu" hidden>
+      <p class="etiq">Me joindre</p>
+      <a class="flot-tel" href="tel:+352661495319">+352 661 495 319</a>
+      <button type="button" class="bouton petit" id="flot-copier">Copier le numéro</button>
+      <a class="bouton petit" href="https://www.linkedin.com/in/nils-davoine-81b46b19b" target="_blank" rel="noopener">Écrire sur LinkedIn</a>
+      <a class="bouton plein petit" href="#contact">Demander un audit gratuit</a>
+      <p class="source" id="flot-etat" aria-live="polite">Nils Davoine répond lui-même.</p>
+    </div>
+    <button type="button" class="flot-bouton" aria-expanded="false" aria-controls="flot-menu"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>Contact : 661 495 319</span></button>
+  </div>
+<script>
+/* Ce qui est commun aux quatre pages : le menu de contact, le bouton « Menu » des petits écrans, le trait de lecture. */
+(() => {
+  const flot = document.querySelector(".flot"), bouton = flot.querySelector(".flot-bouton"), menu = document.getElementById("flot-menu"), tel = flot.querySelector(".flot-tel"), etat = document.getElementById("flot-etat");
+  const ouvre = oui => { menu.hidden = !oui; bouton.setAttribute("aria-expanded", oui ? "true" : "false"); };
+  bouton.addEventListener("click", () => ouvre(menu.hidden));
+  document.addEventListener("click", e => { if (!flot.contains(e.target)) ouvre(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { ouvre(false); bouton.focus(); } });
+  menu.querySelector('a[href="#contact"]').addEventListener("click", () => ouvre(false));
+  const repli = () => { const r = document.createRange(); r.selectNodeContents(tel); const s = getSelection(); s.removeAllRanges(); s.addRange(r); etat.textContent = "Numéro sélectionné : copiez-le."; };
+  document.getElementById("flot-copier").addEventListener("click", () => { if (!navigator.clipboard) return repli(); navigator.clipboard.writeText(tel.textContent.trim()).then(() => { etat.textContent = "Numéro copié."; }, repli); });
+
+  const barre = document.querySelector(".menu"), plus = barre.querySelector(".m-plus");
+  plus.addEventListener("click", () => plus.setAttribute("aria-expanded", barre.classList.toggle("ouvert") ? "true" : "false"));
+  barre.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => { barre.classList.remove("ouvert"); plus.setAttribute("aria-expanded", "false"); }));
+
+  let attend = false;
+  const suit = () => { attend = false; barre.style.setProperty("--lu", (scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4)); };
+  addEventListener("scroll", () => { if (!attend) { attend = true; requestAnimationFrame(suit); } }, {passive: true});
+  addEventListener("resize", suit); suit();
+})();
+</script>
 </div>
 
 <script type="application/ld+json">
@@ -653,11 +828,63 @@ h3{font-size:var(--t5);line-height:1.16}
 </script>
 <script>
 document.documentElement.lang = "fr";
-/* À l'arrivée de chaque doute à l'écran, sa fenêtre s'allume, une seule fois. Sans ce programme, les fenêtres sont déjà allumées. */
-if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const oeil = new IntersectionObserver((vues, o) => vues.forEach(v => { if (v.isIntersecting) { v.target.classList.add("vu"); o.unobserve(v.target); } }), {threshold: .3});
-  document.querySelectorAll(".doute").forEach(d => oeil.observe(d));
-}
+/* La veille : un doute arrive en nuage au-dessus du bâtiment, sa réponse allume une fenêtre, le nuage éclate. Six doutes, six fenêtres. */
+(() => {
+  const ve = document.querySelector(".veille"), doutes = [...document.querySelectorAll(".doute")]; if (!ve || !doutes.length) return;
+  const calme = matchMedia("(prefers-reduced-motion: reduce)").matches, N = doutes.length;
+  const cas = doutes.map(d => ({id: d.id, q: d.querySelector("h2").textContent, r: d.querySelector(".conviction").textContent.replace(/\s+/g, " ").trim(), teinte: d.style.getPropertyValue("--pe")}));
+  const q = s => ve.querySelector(s), qq = s => [...ve.querySelectorAll(s)];
+  const vitres = qq(".vitre"), halos = qq(".halo"), nuee = q(".ve-nuee"), eclats = q(".ve-eclats"), bat = q(".ve-batiment"), rang = q(".ve-rang"), doute = q(".ve-doute"), reponse = q(".ve-reponse"), lire = q(".ve-lire"), pause = q(".ve-pause");
+  const T = {arrive: 900, allume: 2200, eclate: 2800, fin: 5600, fete: 7400}, X = 280, Y = 62;
+  let i = 0, t = 0, marche = !calme, fixe = calme, visible = true, hier = 0;
+  const points = cas.map((c, k) => { const b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", c.q); b.append(document.createElement("i")); b.addEventListener("click", () => va(k)); q(".ve-points").append(b); return b; });
+  const scene = n => {
+    i = (n + N) % N; t = 0; ve.style.setProperty("--pc", cas[i].teinte);
+    rang.textContent = "Doute " + (i + 1) + " sur " + N; doute.textContent = cas[i].q; reponse.lastElementChild.textContent = cas[i].r; reponse.classList.remove("la"); lire.href = "#" + cas[i].id;
+    doute.classList.remove("monte"); void doute.offsetWidth; doute.classList.add("monte");
+    points.forEach((b, k) => { b.classList.toggle("fait", k < i); k === i ? b.setAttribute("aria-current", "true") : b.removeAttribute("aria-current"); });
+  };
+  const dessine = () => {
+    const p = (a, b) => Math.max(0, Math.min(1, (t - a) / (b - a))), leve = fixe || t >= T.allume;
+    vitres.forEach((v, k) => { const on = k < i || (k === i && leve); v.classList.toggle("allumee", on); halos[k].classList.toggle("allumee", on); v.classList.toggle("eclat", !fixe && k === i && t >= T.allume && t < T.allume + 500); });
+    if (leve) points[i].classList.add("fait");
+    reponse.classList.toggle("la", fixe || t >= T.allume + 250);
+    if (fixe) { nuee.setAttribute("opacity", 0); eclats.setAttribute("opacity", 0); bat.removeAttribute("transform"); return; }
+    const a = p(0, T.arrive), ad = 1 - (1 - a) ** 3, e = p(T.eclate, T.eclate + 520);
+    nuee.setAttribute("opacity", (1 - e).toFixed(3)); nuee.setAttribute("transform", "translate(" + (-90 + (X + 90) * ad).toFixed(1) + " " + Y + ") scale(" + (1 + .5 * e).toFixed(3) + ")");
+    eclats.setAttribute("opacity", t >= T.eclate ? (1 - e).toFixed(3) : 0); eclats.setAttribute("transform", "translate(" + X + " " + Y + ") scale(" + (.5 + 1.3 * e).toFixed(3) + ") rotate(" + (e * 40).toFixed(1) + ")");
+    const u = Math.max(0, (t - T.allume) / 1000), k = .05 * Math.exp(-5 * u) * Math.sin(16 * u) * (t >= T.allume ? 1 : 0), f = i === N - 1 && t > T.fin ? .02 * Math.sin((t - T.fin) / 130) : 0;
+    bat.setAttribute("transform", "translate(280 338) scale(" + (1 - k - f).toFixed(4) + " " + (1 + k + f).toFixed(4) + ") translate(-280 -338)");
+  };
+  const va = n => { fixe = calme || !marche; scene(n); dessine(); };
+  const tic = h => {
+    if (marche && visible && !fixe) { t += Math.min(64, h - hier); if (t >= (i === N - 1 ? T.fete : T.fin)) scene(i + 1); dessine(); }
+    hier = h; requestAnimationFrame(tic);
+  };
+  pause.addEventListener("click", () => { marche = !marche; pause.textContent = marche ? "Pause" : "Lecture"; if (marche && fixe) { fixe = false; scene(i); } });
+  if (calme) pause.hidden = true;
+  ve.hidden = false;
+  if (window.IntersectionObserver) new IntersectionObserver(e => visible = e[0].isIntersecting).observe(ve);
+  scene(0); t = T.arrive; dessine(); requestAnimationFrame(tic);
+})();
+
+/* Les six doutes en classeur : le programme construit la liste des questions et n'affiche qu'une réponse à la fois. */
+(() => {
+  const zone = document.querySelector(".doutes"); if (!zone) return;
+  const doutes = [...zone.querySelectorAll(".doute")], calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const nav = document.createElement("div"); nav.className = "v-nav"; nav.setAttribute("role", "group"); nav.setAttribute("aria-label", "Les six doutes");
+  const boutons = doutes.map((d, k) => { const b = document.createElement("button"); b.type = "button"; b.innerHTML = "<b>" + String(k + 1).padStart(2, "0") + "</b>"; b.append(d.querySelector("h2").textContent); b.addEventListener("click", () => choisit(k)); nav.append(b); return b; });
+  const choisit = k => {
+    doutes.forEach((d, n) => { d.classList.toggle("actif", n === k); d.classList.remove("vu"); });
+    boutons.forEach((b, n) => n === k ? b.setAttribute("aria-current", "true") : b.removeAttribute("aria-current"));
+    void doutes[k].offsetWidth; requestAnimationFrame(() => doutes[k].classList.add("vu"));
+  };
+  const montre = id => { const k = doutes.findIndex(d => d.id === id); if (k < 0) return false; choisit(k); zone.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"}); return true; };
+  zone.prepend(nav); zone.classList.add("pret"); if (!calme) zone.classList.add("anime"); choisit(0);
+  /* les liens vers un doute (« Lire la réponse », ou une adresse qui finit par #erreur) ouvrent ce doute */
+  document.addEventListener("click", e => { const a = e.target.closest('a[href^="#"]'); if (a && montre(a.getAttribute("href").slice(1))) e.preventDefault(); });
+  addEventListener("hashchange", () => montre(location.hash.slice(1))); if (location.hash) montre(location.hash.slice(1));
+})();
 (() => {
   const a = document.getElementById("courriel"), b = document.getElementById("copier"), ok = document.getElementById("copie-ok");
   if (!a || !a.textContent.includes("@")) return;

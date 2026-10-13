@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Simulateur : combien de jours l’IA rend à votre équipe | AiAllDesk</title>
+<meta name="description" content="Mettez vos nombres : le simulateur d’AiAllDesk calcule les jours de travail que l’IA peut rendre à votre équipe chaque année, et ce qu’ils valent. Chaque gain cite sa source.">
+<meta property="og:title" content="Simulateur : combien de jours l’IA rend à votre équipe | AiAllDesk">
+<meta property="og:description" content="Mettez vos nombres : le simulateur d’AiAllDesk calcule les jours de travail que l’IA peut rendre à votre équipe chaque année, et ce qu’ils valent. Chaque gain cite sa source.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_LU">
+<link rel="icon" href="favicon.png" sizes="96x96" type="image/png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<style>
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(polices/e2661bcc0d77.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400 600; font-stretch: 100%; font-display: swap; src: url(polices/868a235a9c8b.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(polices/f24c3215230a.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+/* Composition : un cadre peint en ouverture (le tri du courrier), puis des sections de lecture alignées à gauche.
+   Les écrans d'exemple et les deux cadres peints restent sombres dans toutes les ambiances. Une teinte par pôle. */
+:root{color-scheme:light;
+  --fond:#eef2f5;--surface:#ffffff;--surface-2:#dfe7ee;--trait:#c6d1db;--texte:#101820;--doux:#4a5967;
+  --cta:#101820;--cta-survol:#2a3a4c;--sur-cta:#ffffff;--c-etiq:#4a5967;
+  --p-fact:#775600;--p-docs:#17694a;--p-rep:#2553ba;--p-vente:#43600e;--p-mkt:#a02f63;--p-recr:#6247c4}
+:root{
+  --e-fond:#0c121a;--e-surface:#182533;--e-surface-2:#22344a;--e-trait:#30445a;--e-texte:#f3f1ec;--e-doux:#a9b8c4;
+  --e-fact:#e6c264;--e-docs:#7fcbab;--e-rep:#8fb4ff;--e-vente:#b7d77a;--e-mkt:#ee9bbd;--e-recr:#b9a6f0;
+  --peche:#f7b092;--peche-survol:#ffc6ad;--sur-peche:#1d1209;--carton:#e7d5b0;--ruban:#c9a56a;--sur-carton:#2a2114;--or:#f5c96a;--papier:#fbf8f1;--sur-papier:#1d1a14;
+  --titre:"Newsreader",Georgia,"Times New Roman",serif;
+  --corps:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --etiq:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --t1:13px;--t2:15px;--t3:17px;--t4:21px;--t5:28px;--t6:36px;--t7:clamp(34px,5.1vw,58px);
+  --r1:6px;--r2:12px;--r3:18px;
+  scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+*{box-sizing:border-box}
+body{background:var(--fond);color:var(--texte);font-family:var(--corps);font-size:var(--t3);line-height:1.55;padding-inline:16px;padding-block:0 88px;overflow-x:clip}
+.page{max-width:1180px;margin-inline:auto}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--cta);outline-offset:3px;border-radius:var(--r1)}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+h1,h2,h3{font-family:var(--titre);font-weight:500;letter-spacing:-.012em;text-wrap:balance}
+h1{font-size:var(--t7);line-height:1.06}
+h2{font-size:var(--t6);line-height:1.12}
+h3{font-size:var(--t5);line-height:1.16}
+.deux span{display:block}
+.etiq{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase;color:var(--c-etiq)}
+.source{font-size:var(--t1);color:var(--doux)}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.saut{position:absolute;left:-999px}
+.saut:focus{left:16px;top:16px;z-index:50;background:var(--surface);padding:10px 14px}
+.sombre{--fond:var(--e-fond);--surface:var(--e-surface);--surface-2:var(--e-surface-2);--trait:var(--e-trait);--texte:var(--e-texte);--doux:var(--e-doux);--cta:var(--peche);--cta-survol:var(--peche-survol);--sur-cta:var(--sur-peche);--c-etiq:var(--peche);color:var(--texte)}
+
+/* Boutons et liens : chacun réagit au survol et à l'appui */
+.bouton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;color:var(--texte);font-weight:500;font-size:var(--t3);text-decoration:none;transition:background .15s,border-color .15s,transform .1s}
+.bouton:hover{background:var(--surface-2);border-color:var(--doux)}
+.bouton:active{transform:translateY(1px)}
+.bouton.plein{background:var(--cta);border-color:var(--cta);color:var(--sur-cta)}
+.bouton.plein:hover{background:var(--cta-survol);border-color:var(--cta-survol)}
+.bouton.petit{min-height:40px;padding:7px 15px;font-size:var(--t2)}
+.lien{font-weight:500;text-underline-offset:4px;text-decoration-thickness:1px}
+.lien:hover{text-decoration-thickness:2px}
+
+/* Menu : le même sur les quatre pages, il suit la lecture. Les pages sont dans une réglette, la page en cours en plein,
+   et un trait pêche mesure la lecture. Sur petit écran, les pages se rangent derrière le bouton « Menu ». */
+.menu{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-block:10px;background:var(--fond);border-bottom:1px solid var(--trait);box-shadow:0 0 0 100vmax var(--fond);clip-path:inset(0 -100vmax -3px)}
+.menu::after{content:"";position:absolute;inset:auto 0 -1px;height:3px;background:var(--peche);transform-origin:left;transform:scaleX(var(--lu,0))}
+.marque{display:flex;align-items:center;gap:10px;font-weight:600;font-size:var(--t4);text-decoration:none}
+.menu nav{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--surface-2);font-size:var(--t2)}
+.menu nav a{text-decoration:none;padding:6px 14px;border-radius:999px;transition:background .15s,color .15s}
+.menu nav a:hover{background:var(--surface)}
+.menu nav a[aria-current="page"]{background:var(--texte);color:var(--fond)}
+.menu .bouton,.m-plus{border-radius:999px}
+.m-plus{display:none;align-items:center;min-height:40px;margin-left:auto;padding:7px 14px;border:1px solid var(--trait);background:transparent;font-size:var(--t2)}
+
+/* Haut de page : le cadre peint */
+.haut{position:relative;z-index:1;margin-top:14px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding-bottom:clamp(150px,15vw,178px)}
+.haut .fond,.fin .fond{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.haut .fond{object-position:62% 100%;opacity:.85}
+.haut .voile{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,12,18,.58) 0%,rgba(8,12,18,.16) 46%,rgba(8,12,18,0) 100%)}
+.accroche{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;padding:46px 20px 30px}
+.accroche .sous{max-width:62ch;font-size:var(--t4);line-height:1.45;text-wrap:pretty}
+.boutons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:4px}
+.haut .bouton:not(.plein){background:rgba(12,18,26,.55);border-color:rgba(243,241,236,.45)}
+.haut .bouton:not(.plein):hover{background:rgba(12,18,26,.85);border-color:var(--texte)}
+.accroche .note{font-size:var(--t2)}
+.accroche .note b{color:var(--peche);font-weight:600}
+
+/* L'écran d'exemple : trois messages, trois réponses préparées, et c'est le visiteur qui valide */
+.ecran{position:relative;width:min(100% - 32px,940px);margin-inline:auto;background:rgba(12,18,26,.96);border:1px solid var(--trait);border-radius:var(--r2);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.75);--pc:var(--e-rep);text-align:left}
+.e-barre{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;padding:11px 16px;border-bottom:1px solid var(--trait);font-size:var(--t2);color:var(--doux)}
+.e-barre b{color:var(--texte);font-weight:500}
+.ex{font-family:var(--etiq);font-size:var(--t1);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--doux);border-radius:var(--r1);padding:0 7px;margin-left:8px;color:var(--doux)}
+.e-corps{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.4fr)}
+.e-liste{display:flex;flex-direction:column;gap:8px;padding:14px;border-right:1px solid var(--trait)}
+.e-mail{width:100%;text-align:left;display:grid;gap:2px;padding:10px 12px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface);font-size:var(--t2);transition:border-color .15s,background .15s}
+.e-mail:hover{background:var(--surface-2)}
+.e-mail[aria-current="true"]{border-color:var(--pc)}
+.e-mail strong{font-weight:500}
+.e-mail span{color:var(--doux)}
+.e-mail em{font-style:normal;font-size:var(--t1);color:var(--pc)}
+.e-mail.fait em{color:var(--doux)}
+.e-detail{display:flex;flex-direction:column;gap:12px;padding:16px 18px;min-width:0}
+.e-entete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;font-weight:500}
+.e-entete small{font-weight:400;color:var(--doux);font-size:var(--t1)}
+.e-msg{font-size:var(--t2)}
+.puces{display:flex;flex-wrap:wrap;gap:6px}
+.puce{font-size:var(--t1);border:1px solid var(--pc);border-radius:var(--r1);padding:2px 8px;background:var(--surface-2);background:color-mix(in srgb,var(--pc) 16%,transparent)}
+.e-reponse{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface)}
+.e-reponse>.etiq{color:var(--doux)}
+.e-reponse p{font-size:var(--t2)}
+.pj{font-family:var(--etiq);font-size:var(--t1);color:var(--doux)}
+.e-actions,.t-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;min-height:40px}
+.valider{min-height:40px;padding:7px 16px;border-radius:var(--r1);border:1px solid var(--pc);background:var(--pc);color:var(--e-fond);font-weight:600;font-size:var(--t2);transition:filter .15s,transform .1s}
+.valider:hover{filter:brightness(1.14)}
+.valider:active{transform:translateY(1px)}
+.etat{font-size:var(--t2);color:var(--doux)}
+.envoye .etat{color:var(--pc)}
+.e-fin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 16px;border-top:1px solid var(--trait);font-size:var(--t2)}
+.rejouer{min-height:40px;padding:7px 14px;border-radius:var(--r1);border:1px solid var(--trait);background:transparent;font-size:var(--t2);transition:background .15s,border-color .15s}
+.rejouer:hover{background:var(--surface-2);border-color:var(--doux)}
+.liens-poles{position:relative;width:max-content;max-width:calc(100% - 32px);margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--trait);border-radius:var(--r2);box-shadow:0 14px 34px -14px rgba(0,0,0,.7)}
+.liens-poles a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 13px;border-radius:var(--r1);text-decoration:none;font-size:var(--t2);transition:background .15s}
+.liens-poles a:hover{background:var(--surface-2)}
+.liens-poles .ico{color:var(--pc)}
+
+/* Le tapis roulant : il traverse la page d'un bord à l'autre. Les chiffres de Nils Davoine sont les étiquettes des colis.
+   Les colis avancent dans .tp-piste ; les rouleaux d'acier tournent sur place, entre deux longerons boulonnés. */
+@property --tour{syntax:"<angle>";inherits:false;initial-value:0deg}
+.tapis{position:relative;width:100vw;margin:26px 0 0 calc(50% - 50vw);padding-top:36px;overflow-x:auto;
+  --r1:#f5f7f9;--r2:#7c8894;--r3:#e3e8ec;--r4:#667280;--axe:#2b323a;--boulon:#4c5661;--pied-a:#7b8794;--pied-b:#cfd6dc;
+  --veine:linear-gradient(transparent,transparent);
+  --longeron:linear-gradient(180deg,#f1f4f6,#c2cad2 30%,#98a3ae 62%,#75818d)}
+.tapis.defile{overflow:hidden}
+.tp-piste{position:relative;z-index:1;display:flex;width:max-content}
+.tp-piste ul{display:flex;flex:none;align-items:flex-end}
+.tp-piste li{--k1:#dcbd8e;--k2:#c5a06b;position:relative;flex:none;margin:0 34px 0 16px;padding:11px 60px 13px 12px;
+  background:linear-gradient(90deg,transparent calc(100% - 46px),rgba(248,238,212,.82) calc(100% - 46px) calc(100% - 22px),transparent calc(100% - 22px)),linear-gradient(180deg,var(--k1),var(--k2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -2px 0 rgba(90,60,20,.22),0 13px 12px -11px rgba(8,12,18,.75)}
+.tp-piste li::before{content:"";position:absolute;inset:auto 0 100% 0;height:12px;transform:skewX(-45deg);transform-origin:bottom left;background:linear-gradient(90deg,transparent calc(100% - 46px),rgba(252,246,228,.9) calc(100% - 46px) calc(100% - 22px),transparent calc(100% - 22px)),#ead2a8}
+.tp-piste li::after{content:"";position:absolute;inset:0 auto 0 100%;width:12px;transform:skewY(-45deg);transform-origin:top left;background:linear-gradient(180deg,#b08c5a,#9c7848)}
+.tp-piste li:nth-child(3n+2){padding-top:24px}
+.tp-piste li:nth-child(4n+3){--k1:#d3b381;--k2:#b9935d}
+.tp-piste p{display:flex;flex-direction:column;gap:2px;width:max-content;max-width:158px;padding:7px 10px 8px;border-radius:2px;background:#fbf8f1;box-shadow:0 1px 1.5px rgba(60,40,10,.4);color:#1d1a14}
+.tp-piste p::after{content:"";height:7px;margin-top:4px;opacity:.72;background:repeating-linear-gradient(90deg,#1d1a14 0 2px,transparent 2px 3px,#1d1a14 3px 4px,transparent 4px 7px,#1d1a14 7px 10px,transparent 10px 12px)}
+.tp-piste b{font-family:var(--titre);font-weight:500;font-size:var(--t5);line-height:1;font-variant-numeric:tabular-nums}
+.tp-piste span{font-size:var(--t1);line-height:1.25}
+.tapis.defile .tp-piste{animation:defile 46s linear infinite}
+.tapis.defile:hover .tp-piste,.tapis:hover .tp-rouleaux{animation-play-state:paused}
+@keyframes defile{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes tour{to{--tour:360deg}}
+.tp-rouleaux,.tp-chassis{display:block;position:relative}
+.tp-rouleaux{--pas:22px;height:22px;animation:tour .95s linear infinite;
+  background:radial-gradient(circle,var(--axe) 0 2px,transparent 2.6px) 0 0/var(--pas) 22px,conic-gradient(from var(--tour),var(--r1),var(--r2) 25%,var(--r3) 50%,var(--r4) 75%,var(--r1)) 0 0/var(--pas) 22px;
+  -webkit-mask:radial-gradient(circle 10.4px at 50% 50%,#000 95%,transparent) 0 0/var(--pas) 22px;mask:radial-gradient(circle 10.4px at 50% 50%,#000 95%,transparent) 0 0/var(--pas) 22px}
+.tp-chassis{z-index:2;height:48px;margin-top:-11px;background:
+  radial-gradient(circle,var(--boulon) 0 1.7px,transparent 2.2px) 12px 5px/72px 6px repeat-x,
+  var(--veine) 0 0/100% 16px no-repeat,
+  var(--longeron) 0 0/100% 16px no-repeat,
+  repeating-linear-gradient(90deg,transparent 0 168px,var(--pied-a) 168px 171px,var(--pied-b) 171px 177px,var(--pied-a) 177px 180px,transparent 180px 360px) 0 16px/100% 28px no-repeat,
+  repeating-linear-gradient(90deg,transparent 0 158px,var(--pied-a) 158px 190px,transparent 190px 360px) 0 100%/100% 4px no-repeat}
+
+/* Sections de lecture */
+.bloc{padding-block:88px 0;display:flex;flex-direction:column;gap:32px;scroll-margin-top:64px}
+.tete{display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.tete p:not(.etiq){color:var(--doux)}
+
+/* Les six pôles à la file, chacun dans sa carte ; à gauche, le tapis roulant vu de dessus, que le colis descend avec la lecture */
+.file{position:relative;--g:100px;display:flex;flex-direction:column;gap:16px;padding-left:var(--g)}
+.pole{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px 48px;align-items:start;padding:26px 28px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--surface);scroll-margin-top:72px;transition:border-color .3s}
+.pole.ici{border-color:var(--pc)}
+.pole .texte{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pole .etiq{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--pc);padding:5px 10px;border-radius:var(--r1);background:var(--surface);background:color-mix(in srgb,var(--pc) 14%,transparent)}
+.pole .etiq .ico{width:16px;height:16px}
+.pole .texte>p:not(.etiq){color:var(--doux);max-width:54ch;font-size:var(--t2)}
+.chiffres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;margin-top:2px}
+.chiffres li{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--trait);padding-top:10px}
+.chiffres strong{font-family:var(--titre);font-weight:500;font-size:var(--t5);line-height:1;color:var(--pc);font-variant-numeric:tabular-nums}
+.chiffres span{font-size:var(--t2);line-height:1.4}
+.pole .lien{align-self:flex-start;font-size:var(--t2)}
+.chemin{position:absolute;inset:0 auto 0 0;width:var(--g);pointer-events:none}
+.c-voie{position:absolute;inset:0 auto 0 calc(50% - 22px);width:44px;border-radius:3px;box-shadow:0 0 0 1px rgba(16,24,32,.35),6px 0 12px -6px rgba(16,24,32,.35)}
+.c-voie::before,.c-voie::after{content:"";position:absolute;top:0;bottom:0;width:6px}
+.c-voie::before{left:0}
+.c-voie::after{right:0}
+.colis{position:sticky;top:calc(50vh - 19px);z-index:2;display:grid;place-items:center;width:38px;height:38px;margin-inline:auto;border-radius:3px;color:#2a2114;font:600 12px/1 var(--etiq);
+  background:radial-gradient(circle,#fbf8f1 0 10px,rgba(60,40,10,.3) 10.5px,transparent 11.5px),linear-gradient(90deg,transparent 14px,rgba(250,242,220,.92) 14px 24px,transparent 24px),linear-gradient(135deg,#e2c597,#c29c66);
+  box-shadow:0 0 0 1px #94733f,0 8px 9px -2px rgba(16,24,32,.55),inset 0 1px 0 rgba(255,255,255,.5)}
+.noeud{position:absolute;left:calc(var(--g) / -2 - 36px);top:34px;z-index:3;width:72px;height:12px;border-radius:2px}
+.noeud::before,.noeud::after{content:"";position:absolute}
+.noeud .ico{position:absolute;left:calc(50% - 14px);top:-8px;width:28px;height:28px;padding:5px;border-radius:50%;transition:color .3s,background .3s,box-shadow .3s,border-color .3s}
+/* l'acier : des rouleaux entre deux longerons, un portique boulonné par pôle, un voyant qui s'allume au passage du colis */
+.c-voie{background:repeating-linear-gradient(180deg,#39424c 0 1.5px,#8d99a6 2.5px,#f4f7f9 5px,#c3ccd4 8px,#6d7884 11px,#39424c 12.5px,#1d2329 13px 15px)}
+.c-voie::before,.c-voie::after{background:radial-gradient(circle,#4c5661 0 1.3px,transparent 1.8px) 0 10px/6px 60px repeat-y,linear-gradient(90deg,#7b8794,#f1f4f6 45%,#98a3ae)}
+.noeud{background:linear-gradient(180deg,#f6f8fa,#b5bfc8 45%,#75818d);box-shadow:0 7px 8px -3px rgba(16,24,32,.5)}
+.noeud::before,.noeud::after{top:-6px;width:14px;height:24px;border-radius:2px;background:radial-gradient(circle,#3d4650 0 1.3px,transparent 1.8px) 0 0/7px 12px,linear-gradient(180deg,#e3e8ec,#8b96a2);box-shadow:0 3px 4px -1px rgba(16,24,32,.45)}
+.noeud::before{left:-5px}
+.noeud::after{right:-5px}
+.noeud .ico{background:#1b222b;border:2px solid #c3ccd4;color:#75818d}
+.passe .noeud .ico{color:var(--pe);box-shadow:0 0 0 2px #1b222b,0 0 14px 1px var(--pe)}
+
+/* Le menu de contact : un bouton rond, pêche, qui bat doucement en bas à droite de chaque page */
+.flot{position:fixed;z-index:25;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.flot-bouton{position:relative;display:grid;place-items:center;width:60px;height:60px;padding:0;border:0;border-radius:50%;background:var(--peche);color:var(--sur-peche);box-shadow:0 16px 30px -10px rgba(8,12,18,.6);transition:transform .15s,background .15s}
+.flot-bouton:hover{background:var(--peche-survol);transform:translateY(-2px)}
+.flot-bouton .ico{width:26px;height:26px}
+.flot-bouton span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.flot-bouton::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--peche);animation:f-onde 2.4s ease-out infinite}
+@keyframes f-onde{from{scale:1;opacity:.9}to{scale:1.7;opacity:0}}
+.flot-menu{display:flex;flex-direction:column;gap:10px;width:min(300px,calc(100vw - 32px));padding:18px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);box-shadow:0 24px 50px -18px rgba(8,12,18,.8)}
+.flot-tel{font-family:var(--titre);font-size:var(--t5);line-height:1.1;text-decoration:none;font-variant-numeric:tabular-nums;user-select:all}
+.flot-tel:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.flot-menu .bouton{width:100%}
+
+/* Le verre : sur la peinture, l'écran d'exemple, les citations et les textes sont des vitres dépolies ; la peinture se devine derrière */
+.ecran,.liens-poles,.citation:not(.c-clair) .c-texte,.p-texte,.fin::after{-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(243,241,236,.28)}
+.ecran,.liens-poles{background:rgba(12,18,26,.46);box-shadow:0 30px 80px -30px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.2)}
+.e-mail,.e-reponse{background:rgba(24,37,51,.5)}
+.citation:not(.c-clair) .c-texte,.p-texte,.fin::after{border-radius:var(--r2);background:rgba(12,18,26,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.citation:not(.c-clair) .c-texte,.p-texte{padding:28px 32px}
+.p-texte{align-self:flex-start;max-width:min(100%,780px)}
+.fin::after{content:"";position:absolute;inset:40px auto 40px calc(clamp(20px,5vw,64px) - 24px);width:min(608px,calc(100% - 2 * clamp(20px,5vw,64px) + 48px))}
+.fin>*:not(.fond):not(.voile){z-index:1}
+.haut .voile,.citation .voile,.fin .voile,.p-haut .voile{opacity:.5}
+
+/* Le trajet d'un pôle : cinq étapes cliquables ; l'IA avance seule jusqu'à l'étape où une personne valide */
+.trajet{--pc:var(--pe);display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);min-width:0}
+.t-etapes{display:flex;gap:6px}
+/* seule l'étape en cours écrit son nom ; les autres gardent leur numéro, et leur nom reste lu par les lecteurs d'écran */
+.t-etapes li{flex:none;min-width:0}
+.t-etapes li.ici{flex:1 1 0}
+.t-etapes li:not(.ici) span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.t-etapes button{width:100%;height:100%;display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--trait);border-radius:var(--r1);background:transparent;color:var(--doux);font-size:var(--t1);line-height:1.25;text-align:left;transition:border-color .15s,color .15s,background .15s}
+.t-etapes button:hover{border-color:var(--doux);color:var(--texte)}
+.t-etapes b{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;font-weight:500}
+.t-etapes .fait button{color:var(--texte)}
+.t-etapes .fait b{background:var(--pc);border-color:var(--pc);color:var(--e-fond)}
+.t-etapes .ici button{color:var(--texte);border-color:var(--pc);background:var(--surface);background:color-mix(in srgb,var(--pc) 16%,transparent)}
+.t-carte{display:flex;flex-direction:column;gap:7px;padding:12px 14px;border-radius:var(--r1);background:var(--surface);min-height:156px;font-size:var(--t2);line-height:1.45}
+.t-carte [data-de]{opacity:.42;transition:opacity .4s}
+.t-carte [data-de].vu{opacity:1}
+.t-carte b{font-weight:500}
+.t-carte q{quotes:"«\00a0" "\00a0»";color:var(--doux)}
+.t-carte .fichier{font-family:var(--etiq);font-size:var(--t1);overflow-wrap:anywhere}
+.t-carte .visuel{height:54px;border-radius:var(--r1);background:linear-gradient(135deg,var(--pc),var(--surface-2))}
+.t-phrase{font-size:var(--t3);line-height:1.4;min-height:2.8em;text-wrap:pretty}
+
+/* Le simulateur (sur sa page) : un seul grand nombre */
+.simu{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px 56px;align-items:start}
+.reglages{display:flex;flex-direction:column;gap:14px}
+.reglage{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:4px 14px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--trait)}
+.reglage input{width:100%;min-height:42px;padding:6px 10px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--surface);font-variant-numeric:tabular-nums;text-align:right;transition:border-color .15s}
+.reglage input:hover{border-color:var(--doux)}
+.reglage small{grid-column:1/-1;font-size:var(--t1);color:var(--doux)}
+.resultat{display:flex;flex-direction:column;gap:18px}
+.gros{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.gros strong{font-family:var(--titre);font-weight:500;font-size:var(--t7);line-height:.95;font-variant-numeric:tabular-nums}
+.gros span{font-size:var(--t4);max-width:22ch;line-height:1.25}
+.resultat>p{color:var(--doux)}
+.resultat>p b{color:var(--texte);font-weight:600;font-variant-numeric:tabular-nums}
+.cases{display:grid;grid-template-rows:repeat(5,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px}
+.cases i{aspect-ratio:1;background:var(--surface-2)}
+.cases .l0,.legende .l0{background:var(--p-rep)}
+.cases .l1,.legende .l1{background:var(--p-vente)}
+.cases .l2,.legende .l2{background:var(--p-recr)}
+.cases .l3,.legende .l3{background:var(--p-mkt)}
+.legende{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:var(--t2)}
+.legende li{display:flex;align-items:center;gap:8px}
+.legende i{width:12px;height:12px;flex:none}
+.legende b{font-weight:500;font-variant-numeric:tabular-nums}
+.mention{font-size:var(--t1);color:var(--doux);max-width:90ch}
+
+/* Comment ça se passe : un trait se trace de gauche à droite, les quatre stations s'allument une à une */
+.marche{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px;padding-top:27px}
+.marche::before{content:"";position:absolute;inset:26px 0 auto;height:3px;border-radius:2px;background:var(--texte);transform-origin:left;transition:transform 1.9s cubic-bezier(.4,.1,.2,1)}
+.marche li{display:flex;flex-direction:column;gap:12px}
+.m-etq{display:flex;flex-direction:column;gap:14px}
+.marche b{position:relative;display:grid;place-items:center;width:54px;height:54px;margin-top:-27px;border-radius:50%;background:var(--texte);box-shadow:0 0 0 8px var(--fond);font-family:var(--titre);font-weight:500;font-size:var(--t5);color:var(--fond);transition:scale .5s cubic-bezier(.3,1.7,.5,1)}
+.marche li:last-child b{background:var(--peche);color:var(--sur-peche)}
+.marche h3{font-size:var(--t4)}
+.marche p{font-size:var(--t2);color:var(--doux)}
+.marche :is(h3,p){transition:opacity .6s,translate .6s}
+.marche li:nth-child(1) :is(b,h3,p){transition-delay:.2s}
+.marche li:nth-child(2) :is(b,h3,p){transition-delay:.65s}
+.marche li:nth-child(3) :is(b,h3,p){transition-delay:1.1s}
+.marche li:nth-child(4) :is(b,h3,p){transition-delay:1.55s}
+.anime:not(.vu) .marche::before{transform:scaleX(0)}
+.anime:not(.vu) .marche b{scale:0}
+.anime:not(.vu) .marche :is(h3,p){opacity:0;translate:0 12px}
+.prix{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 32px;align-items:center;padding:22px 24px;border-radius:var(--r2);background:var(--surface)}
+.prix h3{font-size:var(--t4);margin-bottom:6px}
+.prix-70{font-family:var(--titre);font-weight:500;font-size:var(--t7);line-height:1;font-variant-numeric:tabular-nums}
+.prix p{font-size:var(--t2);color:var(--doux);max-width:75ch}
+
+/* Vos données : les trois engagements sur une feuille, en articles, signée ; à côté, qui est derrière */
+.duo{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px 56px;align-items:start}
+.engagements{position:relative;display:flex;flex-direction:column;counter-reset:art;padding:36px 36px 92px;border-radius:3px;background:var(--papier);color:var(--sur-papier);box-shadow:0 26px 40px -24px rgba(16,24,32,.5),0 0 0 1px #e4dcc6;--doux:#5c5444}
+.engagements::before{content:"Engagements écrits · remis avant tout branchement";padding-bottom:14px;border-bottom:1px solid var(--sur-papier);font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase}
+.engagements li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 18px;counter-increment:art;padding:16px 0;border-bottom:1px dashed #cfc5ad}
+.engagements li::before{content:"Art. " counter(art);grid-row:1/3;padding-top:3px;font-family:var(--etiq);font-size:var(--t1);color:var(--doux)}
+.engagements b{font-weight:600}
+.engagements p{grid-column:2;color:var(--doux);font-size:var(--t2)}
+.engagements::after{content:"Nils Davoine";position:absolute;right:40px;bottom:26px;padding:0 20px 2px;border-bottom:1px solid var(--sur-papier);rotate:-4deg;font-family:var(--titre);font-style:italic;font-size:var(--t5);transition:clip-path 1.3s ease-out .5s}
+.anime:not(.vu) .engagements::after{clip-path:inset(0 100% 0 0)}
+.anime.vu .engagements::after{clip-path:inset(0)}
+.qui{display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--r2);background:var(--surface)}
+.qui h3{font-size:var(--t4)}
+.qui p:not(.etiq){font-size:var(--t2);color:var(--doux)}
+
+/* Fin de page : la peinture revient, on arrive au bâtiment */
+.fin{position:relative;margin-top:88px;border-radius:var(--r3);overflow:hidden;background:var(--fond);padding:64px clamp(20px,5vw,64px);display:flex;flex-direction:column;align-items:flex-start;gap:18px;scroll-margin-top:72px}
+.fin .fond{object-position:100% 100%;opacity:.9}
+.fin .voile{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,18,.95) 0%,rgba(8,12,18,.84) 46%,rgba(8,12,18,.12) 100%)}
+.fin>*:not(.fond):not(.voile){position:relative;max-width:560px}
+.fin>p{color:var(--doux)}
+.fin>.adresse{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:var(--t4);color:var(--texte)}
+#courriel{user-select:all;font-weight:500}
+#courriel.vide{border:1px dashed var(--doux);border-radius:var(--r1);padding:4px 12px;color:var(--doux);font-weight:400;user-select:auto}
+.assurances{display:flex;flex-direction:column;gap:6px;font-size:var(--t2);color:var(--doux)}
+.assurances li{display:flex;gap:8px;align-items:flex-start}
+.assurances .ico{width:18px;height:18px;margin-top:2px;color:var(--peche)}
+
+/* Les citations de Nils Davoine : la phrase de l'agence en petit et en retrait, la sienne en grand.
+   Deux habillages tirés de la peinture (le nuage, le ciel) et un habillage clair, sans image. */
+.citation{position:relative;overflow:hidden;margin:88px 0 0;border-radius:var(--r3);background:var(--fond);padding:clamp(40px,6.5vw,88px) clamp(20px,6vw,80px);display:flex;flex-direction:column}
+.citation .fond{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.citation .voile{position:absolute;inset:0}
+.citation>*:not(.fond):not(.voile){position:relative}
+.c-texte{display:flex;flex-direction:column;gap:22px;width:min(100%,700px)}
+.citation blockquote,.mot{margin:0;font-family:var(--titre);font-weight:500;letter-spacing:-.012em}
+.citation blockquote{font-size:var(--t7);line-height:1.08}
+.citation blockquote span,.mot span{display:block;text-wrap:balance}
+.citation .eux{font-size:.62em;line-height:1.2;font-weight:400;color:var(--doux);margin-bottom:.4em}
+.citation figcaption{font-size:var(--t2);color:var(--doux)}
+.citation figcaption b{color:var(--peche);font-weight:600}
+.c-nuage{align-items:flex-end}
+.c-nuage .fond{object-position:100% 40%;transform:scaleX(-1)}
+.c-nuage .voile{background:linear-gradient(270deg,rgba(8,12,18,.94) 0%,rgba(8,12,18,.8) 48%,rgba(8,12,18,.12) 100%)}
+.c-ciel .fond{object-position:0% 6%}
+.c-ciel .voile{background:linear-gradient(90deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.66) 55%,rgba(8,12,18,.2) 100%)}
+.c-clair{background:transparent;border-radius:0;overflow:visible;padding:56px 0;border-block:1px solid var(--trait)}
+.c-clair figcaption b{color:var(--texte)}
+.mot{font-size:var(--t5);line-height:1.14}
+.mot .eux{font-family:var(--corps);font-size:var(--t2);font-weight:400;letter-spacing:0;line-height:1.4;color:var(--doux);margin-bottom:6px}
+
+/* Les retours écrits des entreprises accompagnées : une mise en page de journal, les mots qui comptent se surlignent à la lecture */
+.avis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 64px}
+.avis figure{position:relative;display:flex;flex-direction:column;gap:16px;margin:0;padding-top:34px;border-top:2px solid var(--texte)}
+.avis figure::before{content:"«";position:absolute;right:0;top:-10px;font-family:var(--titre);font-size:120px;line-height:1;color:var(--trait)}
+.avis blockquote{margin:0;font-size:var(--t3);line-height:1.65}
+.avis blockquote b{display:block;margin-bottom:10px;padding-right:86px;font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1.15;letter-spacing:-.012em;text-wrap:balance}
+.avis figcaption{margin-top:auto;padding-top:12px;border-top:1px solid var(--trait);font-size:var(--t1);color:var(--doux)}
+.avis mark{padding:0 2px;color:inherit;background:linear-gradient(rgba(247,176,146,.65),rgba(247,176,146,.65)) no-repeat 0 88%/100% 62%;transition:background-size 1s cubic-bezier(.3,.7,.2,1) .3s}
+.avis mark:nth-of-type(2){transition-delay:.9s}
+.avis mark:nth-of-type(3){transition-delay:1.5s}
+.anime:not(.vu) .avis mark{background-size:0% 62%}
+
+/* Pied de page */
+.pied{padding-block:40px 0;display:flex;flex-direction:column;gap:12px;font-size:var(--t2);color:var(--doux)}
+.pied strong{color:var(--texte);font-weight:600}
+.pied details{border-top:1px solid var(--trait);padding-top:12px}
+.pied summary{cursor:pointer;color:var(--texte);font-weight:500}
+.pied summary:hover{text-decoration:underline;text-underline-offset:4px}
+.pied details p{margin-top:8px;max-width:80ch}
+
+@media (max-width:1100px){
+  .menu{gap:10px 12px}
+  .menu nav a{padding:6px 9px}
+}
+@media (max-width:1020px){
+  .menu nav{font-size:var(--t1)}
+}
+@media (max-width:900px){
+  .menu{gap:8px 10px}
+  .m-plus{display:inline-flex}
+  .menu nav{display:none;order:5;flex-basis:100%;flex-direction:column;gap:0;padding:0 0 6px;border-radius:0;background:none;font-size:var(--t3)}
+  .menu.ouvert nav{display:flex}
+  .menu nav a,.menu nav a[aria-current="page"]{padding:12px 2px;border-radius:0;border-bottom:1px solid var(--trait);background:none;color:var(--texte)}
+  .menu nav a[aria-current="page"]{font-weight:600}
+  .fin::after{inset-block:24px 146px}
+  .citation:not(.c-clair) .c-texte,.p-texte{padding:22px 20px}
+  .avis{grid-template-columns:minmax(0,1fr)}
+  .citation{margin-top:60px}
+  .c-nuage{align-items:flex-start}
+  .c-nuage .voile,.c-ciel .voile{background:linear-gradient(180deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.82) 70%,rgba(8,12,18,.5) 100%)}
+  .c-clair{padding:40px 0}
+  .liens-poles{display:grid;grid-template-columns:repeat(3,auto);margin-top:14px}
+  .bloc{padding-block:60px 0;gap:26px}
+  .pole{grid-template-columns:minmax(0,1fr);padding:30px 0 0;border:0;border-top:1px solid var(--trait);border-radius:0;background:none}
+  .file{--g:42px;gap:30px}
+  .c-voie{inset:0 auto 0 calc(50% - 15px);width:30px}
+  .c-voie::before,.c-voie::after,.file .c-voie::before,.file .c-voie::after{width:4px}
+  .colis{scale:.7}
+  .noeud{scale:.62}
+  .simu,.duo,.prix{grid-template-columns:minmax(0,1fr)}
+  .marche{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .marche{gap:30px 24px;padding-top:0}
+  .marche::before{display:none}
+  .marche b{margin-top:0}
+  .avis figure+figure{margin-top:40px}
+  .engagements{padding:26px 22px 84px}
+  .fin{margin-top:60px;padding-block:48px 170px}
+  .fin .voile{background:linear-gradient(180deg,rgba(8,12,18,.95) 0%,rgba(8,12,18,.9) 66%,rgba(8,12,18,.1) 100%)}
+}
+@media (max-width:700px){
+  :root{--t4:19px;--t5:25px;--t6:30px}
+  .haut{padding-bottom:236px;background:linear-gradient(180deg,#0e2a40 0%,#1a4560 70%,#2b4a73 100%)}
+  .haut .fond{inset:auto 0 0 auto;width:175%;height:300px;object-position:100% 100%;opacity:1;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%)}
+  .haut .voile{background:linear-gradient(180deg,rgba(8,12,18,.45) 0%,rgba(8,12,18,0) 60%)}
+  .accroche{padding:34px 16px 24px}
+  .accroche .sous{font-size:var(--t3)}
+  .e-corps{grid-template-columns:minmax(0,1fr)}
+  .e-liste{display:none}
+  .liens-poles{width:auto;margin:14px 16px 0;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tapis{padding-top:30px}
+  .tp-piste li{margin:0 26px 0 10px;padding:9px 50px 11px 10px}
+  .tp-piste p{max-width:136px}
+}
+@media (max-width:520px){
+  .chiffres,.marche{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:380px){
+  .accroche .etiq{letter-spacing:.04em}
+}
+</style>
+<style>
+/* Page « Combien je gagne ? ». En haut, le cadre peint, comme sur l'accueil (le veilleur des lettres, adouci). Dessous, le simulateur
+   en tableau de bord : les réglages à gauche, rangés par famille, une ligne chacun ; à droite le résultat, qui reste à l'écran. */
+.s-haut{padding-bottom:clamp(170px,19vw,240px)}
+.s-haut .fond{object-position:60% 100%;opacity:1;filter:saturate(.7)}
+.s-zone{display:flex;flex-direction:column;gap:32px;padding-block:56px 0;scroll-margin-top:84px}
+.simu{grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:28px 48px;align-items:start}
+/* le résultat : une jauge (la part d'un poste à temps plein), le grand nombre, la répartition, l'année */
+.resultat{order:2;position:sticky;top:84px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px 20px;align-items:center;padding:26px;border-radius:var(--r3);background:var(--surface);box-shadow:0 30px 60px -40px rgba(16,24,32,.6),0 0 0 1px var(--trait)}
+.resultat>:not(.jauge):not(.gros){grid-column:1/-1}
+.resultat .bouton{justify-self:start}
+.jauge{position:relative;display:grid;place-items:center;width:120px;height:120px}
+.jauge svg{position:absolute;inset:0;rotate:-90deg}
+.jauge circle{fill:none;stroke-width:12}
+.j-fond{stroke:var(--surface-2)}
+.j-arc{stroke:var(--texte);stroke-linecap:round;stroke-dasharray:314.2;stroke-dashoffset:calc(314.2 - 314.2 * var(--pct,0));transition:stroke-dashoffset .6s cubic-bezier(.3,.8,.2,1)}
+.jauge b{font-family:var(--titre);font-weight:500;font-size:var(--t5);line-height:1}
+.gros{flex-direction:column;align-items:flex-start;gap:4px}
+.gros span{font-size:var(--t3)}
+.barre{display:flex;gap:2px;height:16px;border-radius:8px;overflow:hidden;background:var(--surface-2)}
+.barre i{flex:var(--n,0) 1 0;min-width:0;transition:flex-grow .6s cubic-bezier(.3,.8,.2,1)}
+.barre .l0{background:var(--p-rep)}
+.barre .l1{background:var(--p-vente)}
+.barre .l2{background:var(--p-recr)}
+.barre .l3{background:var(--p-mkt)}
+.grille{display:flex;flex-direction:column;gap:8px}
+.cases{gap:2px}
+.cases i{border-radius:3px;transition:background .4s calc(var(--k,0) * 5ms)}
+.legende{flex-direction:column;gap:6px}
+/* les réglages : une famille, un titre de sa teinte ; un réglage, une ligne (le nom, le nombre entre « moins » et « plus », la source en bref) */
+.reglages{display:flex;flex-direction:column;gap:20px}
+.groupe{display:flex;flex-direction:column;gap:6px}
+.g-nom{display:flex;align-items:center;gap:8px;font-family:var(--etiq);font-size:var(--t1);letter-spacing:.1em;text-transform:uppercase;color:var(--gc)}
+.g-nom::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--gc)}
+.reglage{display:grid;grid-template-columns:minmax(0,1fr) 172px;gap:2px 20px;align-items:center;padding:10px 14px 10px 16px;border:1px solid var(--trait);border-left:3px solid var(--gc,var(--trait));border-radius:var(--r2);background:var(--surface)}
+.reglage label{font-weight:500}
+.reglage small{grid-column:1;grid-row:2}
+.compte{grid-row:1/3;grid-column:2;display:grid;grid-template-columns:40px minmax(0,1fr) 40px;gap:5px}
+.compte button{min-height:40px;border:1px solid var(--trait);border-radius:var(--r1);background:var(--fond);font-size:var(--t4);line-height:1;transition:background .15s,border-color .15s,transform .1s}
+.compte button:hover{background:var(--surface-2);border-color:var(--doux)}
+.compte button:active{transform:translateY(1px)}
+.compte input,.reglage .compte input{min-height:40px;padding:4px;text-align:center;font-family:var(--titre);font-size:var(--t4);-moz-appearance:textfield;appearance:textfield}
+.compte input::-webkit-inner-spin-button,.compte input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.sources{font-size:var(--t1);color:var(--doux)}
+.sources summary{cursor:pointer;color:var(--texte);font-weight:500}
+.sources summary:hover{text-decoration:underline;text-underline-offset:4px}
+.sources ul{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-width:90ch}
+/* ce que le projet coûte : un budget, moins l'aide de l'État (70 %), égale ce qui reste à payer */
+.cout{display:flex;flex-direction:column;gap:22px;padding-top:40px;border-top:1px solid var(--trait)}
+.cout-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:28px;align-items:stretch}
+.cout-lignes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.cout-lignes li{position:relative;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px 22px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--surface)}
+.cout-lignes li::before{content:"−";position:absolute;left:-14px;top:50%;translate:-50% -50%;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--trait);border-radius:50%;background:var(--fond);color:var(--texte);font-size:var(--t4);line-height:1}
+.cout-lignes .reste::before{content:"="}
+.cout-lignes b{font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1;font-variant-numeric:tabular-nums}
+.cout-lignes .reste{border-color:var(--texte);background:var(--texte);color:var(--fond)}
+@media (max-width:900px){
+  .s-zone{padding-top:40px;gap:26px}
+  .simu,.cout-grille,.cout-lignes{grid-template-columns:minmax(0,1fr)}
+  .resultat{position:static;order:0}
+  .cout-lignes li::before{left:50%;top:-14px}
+}
+@media (max-width:520px){
+  .reglage{grid-template-columns:minmax(0,1fr)}
+  .reglage small,.compte{grid-column:1;grid-row:auto}
+  .compte{max-width:200px}
+}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-facture" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-dossier" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-vente" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+  <symbol id="i-marketing" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4z"/><path d="M17 9a4 4 0 0 1 0 6"/></symbol>
+  <symbol id="i-personne" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ecrit" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-oeil" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>
+
+<div class="page" lang="fr">
+  <a class="saut" href="#contenu">Aller au contenu</a>
+  <header class="menu">
+    <a class="marque" href="index.html" aria-label="AiAllDesk, page d’accueil"><svg width="30" height="29" viewBox="0 0 290 280" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M79 176V46a20 20 0 0 1 20-20h59l55 54v96z"/><path d="M158 26v44a10 10 0 0 0 10 10h45"/><rect x="24" y="200" width="242" height="58" rx="29" stroke-width="18"/></g><g fill="currentColor"><circle cx="78" cy="229" r="9"/><circle cx="145" cy="229" r="9"/><circle cx="212" cy="229" r="9"/></g></svg>AiAllDesk</a>
+    <button type="button" class="m-plus" aria-expanded="false" aria-controls="m-nav">Menu</button>
+    <nav id="m-nav" aria-label="Pages du site"><a href="index.html#poles">Ce que l’IA fait pour moi</a><a href="#contenu" aria-current="page">Combien je gagne ?</a><a href="vision.html">Est-ce que ça marche ?</a><a href="profil.html">Qui s’en occupe ?</a></nav>
+    <a class="bouton plein petit" href="#contact">Audit gratuit</a>
+  </header>
+
+  <main id="contenu">
+  <section class="haut s-haut sombre" aria-labelledby="titre">
+    <img class="fond" src="fond-veilleur.jpg" alt="Au crépuscule, dans un champ de blé, un tapis roulant apporte des lettres à une petite maison éclairée où quelqu’un les lit à sa table.">
+    <div class="voile" aria-hidden="true"></div>
+    <div class="accroche">
+      <p class="etiq">Le simulateur</p>
+      <h1 class="deux" id="titre"><span>Combien de jours de travail</span> <span>l’IA peut-elle vous faire gagner ?</span></h1>
+      <p class="sous">Mettez vos propres nombres. Chaque ligne multiplie votre volume par un gain, dont la source est écrite dessous.</p>
+      <div class="boutons">
+        <a class="bouton plein" href="#calcul">Faire le calcul</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="s-zone" id="calcul">
+    <div class="simu">
+      <div class="resultat" aria-live="polite">
+        <div class="jauge" role="img" aria-label="Part d’un poste à temps plein"><svg viewBox="0 0 120 120"><circle class="j-fond" cx="60" cy="60" r="50"/><circle class="j-arc" cx="60" cy="60" r="50"/></svg><b id="j-pct"></b></div>
+        <div class="gros"><strong id="r-jours">77</strong><span>jours de travail rendus à l’équipe, chaque année</span></div>
+        <div class="barre" aria-hidden="true"><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i></div>
+        <div class="grille">
+          <div class="cases" id="cases" role="img" aria-label="77 jours colorés sur 225 : Réponses clients 29, Vente 34, Recrutement 5, Marketing 9."><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l0"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l1"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l2"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i class="l3"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="source">Chaque case est un jour de travail d’une personne à temps plein : 225 par an (45 semaines).</p>
+        </div>
+        <ul class="legende" id="legende">
+          <li><i class="l0"></i>Réponses clients <b>29 j · 13 336 €</b></li>
+          <li><i class="l1"></i>Vente <b>34 j · 15 336 €</b></li>
+          <li><i class="l2"></i>Recrutement <b>5 j · 2 045 €</b></li>
+          <li><i class="l3"></i>Marketing <b>9 j · 4 090 €</b></li>
+        </ul>
+        <p class="r-valeur">Valeur de ce temps, s’il est réemployé : <b id="r-valeur">34 807 €</b> par an.</p>
+        <a class="bouton plein" href="#contact">Refaire ce calcul avec vos vrais volumes</a>
+      </div>
+      <form class="reglages" id="reglages" aria-label="Vos nombres">
+        <div class="groupe" style="--gc:var(--p-rep)">
+          <p class="g-nom">Réponses clients</p>
+          <div class="reglage"><label for="s-rep">Personnes qui répondent aux clients</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Personnes qui répondent aux clients">−</button><input id="s-rep" type="number" inputmode="numeric" min="0" max="50" step="1" value="1" data-entier><button type="button" data-d="1" aria-label="Un de plus : Personnes qui répondent aux clients">+</button></div><small>À temps plein. Gain : 13 % (Brynjolfsson, Li et Raymond, 2025).</small></div>
+        </div>
+        <div class="groupe" style="--gc:var(--p-vente)">
+          <p class="g-nom">Vente</p>
+          <div class="reglage"><label for="s-com">Commerciaux</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Commerciaux">−</button><input id="s-com" type="number" inputmode="numeric" min="0" max="50" step="1" value="3" data-entier><button type="button" data-d="1" aria-label="Un de plus : Commerciaux">+</button></div><small>Chacun tient les rendez-vous de la ligne suivante.</small></div>
+          <div class="reglage"><label for="s-rdv">Rendez-vous par semaine, par commercial</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Rendez-vous par semaine, par commercial">−</button><input id="s-rdv" type="number" inputmode="numeric" min="0" max="40" step="1" value="8" data-entier><button type="button" data-d="1" aria-label="Un de plus : Rendez-vous par semaine, par commercial">+</button></div><small>Gain : 15 minutes par rendez-vous (cas Liantis, publié par Donna).</small></div>
+        </div>
+        <div class="groupe" style="--gc:var(--p-recr)">
+          <p class="g-nom">Recrutement</p>
+          <div class="reglage"><label for="s-recr">Heures de recrutement par semaine</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Heures de recrutement par semaine">−</button><input id="s-recr" type="number" inputmode="numeric" min="0" max="80" step="1" value="4" data-entier><button type="button" data-d="1" aria-label="Un de plus : Heures de recrutement par semaine">+</button></div><small>Gain : 20 % (LinkedIn, Future of Recruiting 2025).</small></div>
+        </div>
+        <div class="groupe" style="--gc:var(--p-mkt)">
+          <p class="g-nom">Marketing</p>
+          <div class="reglage"><label for="s-red">Heures de rédaction par semaine</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Heures de rédaction par semaine">−</button><input id="s-red" type="number" inputmode="numeric" min="0" max="80" step="1" value="4" data-entier><button type="button" data-d="1" aria-label="Un de plus : Heures de rédaction par semaine">+</button></div><small>Gain : 40 % (Noy et Zhang, revue Science, 2023).</small></div>
+        </div>
+        <div class="groupe g-cout" style="--gc:var(--p-fact)">
+          <p class="g-nom">Votre coût</p>
+          <div class="reglage"><label for="s-cout">Coût d’une heure de travail, en euros</label><div class="compte"><button type="button" data-d="-1" aria-label="Un de moins : Coût d’une heure de travail, en euros">−</button><input id="s-cout" type="number" inputmode="decimal" min="0" max="500" step="0.1" value="56.8"><button type="button" data-d="1" aria-label="Un de plus : Coût d’une heure de travail, en euros">+</button></div><small>56,80 € : moyenne au Luxembourg (Eurostat, 2025). Mettez le vôtre.</small></div>
+        </div>
+        <details class="sources">
+          <summary>Les sources en détail</summary>
+          <ul>
+            <li>Réponses clients. Gain appliqué : 13 % du temps, soit 15 % de demandes résolues en plus par heure (Brynjolfsson, Li et Raymond, 2025).</li>
+            <li>Vente. Gain appliqué : 15 minutes par rendez-vous, de 20 à 5 minutes de saisie (cas Liantis, publié par Donna, vendeur du logiciel).</li>
+            <li>Recrutement. Gain appliqué : 20 % (LinkedIn, Future of Recruiting 2025, vendeur de logiciels).</li>
+            <li>Marketing. Gain appliqué : 40 % (Noy et Zhang, revue Science, 2023).</li>
+            <li>Coût horaire. 56,80 € : coût moyen d’une heure pour l’employeur au Luxembourg, hors administration publique (Eurostat, 2025).</li>
+          </ul>
+        </details>
+      </form>
+    </div>
+    <p class="mention">C’est un exemple, pas une promesse. Ces quatre gains ont été mesurés ailleurs, sur d’autres équipes, et deux sont publiés par des vendeurs de logiciels. La facturation et les documents ne sont pas comptés : je n’ai pas trouvé de mesure publiée de leur gain. L’audit gratuit refait ce calcul avec vos vrais volumes.</p>
+    <section class="cout" aria-labelledby="t-cout">
+      <header class="tete">
+        <p class="etiq">Et ce que cela coûte</p>
+        <h2 id="t-cout">L’État peut payer 70 % du projet.</h2>
+        <p>Mettez un budget : la page calcule l’aide, et ce qui reste à votre charge.</p>
+      </header>
+      <div class="cout-grille">
+        <div class="reglage"><label for="s-budget">Budget du projet, hors taxes, en euros</label><div class="compte"><button type="button" data-d="-500" aria-label="500 euros de moins">−</button><input id="s-budget" type="number" inputmode="numeric" min="3000" max="25000" step="500" value="10000" data-entier><button type="button" data-d="500" aria-label="500 euros de plus">+</button></div><small>Un exemple : le vrai prix est dans le compte rendu de l’audit.</small></div>
+        <ul class="cout-lignes" aria-live="polite">
+          <li><span>Aide de l’État, 70 %</span><b id="c-aide">7 000 €</b></li>
+          <li class="reste"><span>Reste à votre charge, hors taxes</span><b id="c-reste">3 000 €</b></li>
+        </ul>
+      </div>
+      <p class="source">Aide SME Packages – AI : pour les projets de 3 000 à 25 000 € hors taxes ; la demande doit être acceptée avant toute commande. <a class="lien" href="https://guichet.public.lu/fr/entreprises/financement-aides/regime-sme-packages/soutien-pme/sme-package-ai.html" target="_blank" rel="noopener">Voir la fiche officielle sur Guichet.lu</a></p>
+    </section>
+  </div>
+
+  <section class="fin sombre" id="contact" aria-labelledby="t-contact">
+    <img class="fond" src="fond-tapis-court.jpg" alt="">
+    <div class="voile" aria-hidden="true"></div>
+    <p class="etiq">Audit gratuit</p>
+    <h2 id="t-contact">Montrez-moi la tâche qui vous pèse.</h2>
+    <p>Une heure, sur une tâche qui vous prend du temps. Je refais ce calcul avec vos vrais volumes, et vous recevez un compte rendu écrit : ce qui peut changer, et ce que cela vous rendrait.</p>
+    <p class="adresse">Écrivez à <span id="courriel" class="vide">adresse de courriel à venir</span><button type="button" class="bouton plein petit" id="copier" hidden>Copier l’adresse</button></p>
+    <p class="source" id="copie-ok" aria-live="polite">Dites-moi en trois lignes : votre société, la tâche qui vous prend du temps, et quand vous joindre.</p>
+    <p class="source">Ou écrivez-moi sur <a class="lien" href="https://www.linkedin.com/in/nils-davoine-81b46b19b" target="_blank" rel="noopener">LinkedIn</a>.</p>
+    <ul class="assurances">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Gratuit, et libre de s’arrêter là.</li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Vos dossiers restent confidentiels.</li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Réponse en deux jours ouvrés, par moi.</li>
+    </ul>
+  </section>
+  </main>
+
+  <footer class="pied">
+    <p><strong>AiAllDesk</strong>, société en cours de constitution, Luxembourg.</p>
+    <p><a class="lien" href="index.html">Retour à la page d’accueil</a></p>
+  </footer>
+  <div class="flot">
+    <div class="flot-menu sombre" id="flot-menu" hidden>
+      <p class="etiq">Me joindre</p>
+      <a class="flot-tel" href="tel:+352661495319">+352 661 495 319</a>
+      <button type="button" class="bouton petit" id="flot-copier">Copier le numéro</button>
+      <a class="bouton petit" href="https://www.linkedin.com/in/nils-davoine-81b46b19b" target="_blank" rel="noopener">Écrire sur LinkedIn</a>
+      <a class="bouton plein petit" href="#contact">Demander un audit gratuit</a>
+      <p class="source" id="flot-etat" aria-live="polite">Nils Davoine répond lui-même.</p>
+    </div>
+    <button type="button" class="flot-bouton" aria-expanded="false" aria-controls="flot-menu"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>Contact : 661 495 319</span></button>
+  </div>
+<script>
+/* Ce qui est commun aux quatre pages : le menu de contact, le bouton « Menu » des petits écrans, le trait de lecture. */
+(() => {
+  const flot = document.querySelector(".flot"), bouton = flot.querySelector(".flot-bouton"), menu = document.getElementById("flot-menu"), tel = flot.querySelector(".flot-tel"), etat = document.getElementById("flot-etat");
+  const ouvre = oui => { menu.hidden = !oui; bouton.setAttribute("aria-expanded", oui ? "true" : "false"); };
+  bouton.addEventListener("click", () => ouvre(menu.hidden));
+  document.addEventListener("click", e => { if (!flot.contains(e.target)) ouvre(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { ouvre(false); bouton.focus(); } });
+  menu.querySelector('a[href="#contact"]').addEventListener("click", () => ouvre(false));
+  const repli = () => { const r = document.createRange(); r.selectNodeContents(tel); const s = getSelection(); s.removeAllRanges(); s.addRange(r); etat.textContent = "Numéro sélectionné : copiez-le."; };
+  document.getElementById("flot-copier").addEventListener("click", () => { if (!navigator.clipboard) return repli(); navigator.clipboard.writeText(tel.textContent.trim()).then(() => { etat.textContent = "Numéro copié."; }, repli); });
+
+  const barre = document.querySelector(".menu"), plus = barre.querySelector(".m-plus");
+  plus.addEventListener("click", () => plus.setAttribute("aria-expanded", barre.classList.toggle("ouvert") ? "true" : "false"));
+  barre.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => { barre.classList.remove("ouvert"); plus.setAttribute("aria-expanded", "false"); }));
+
+  let attend = false;
+  const suit = () => { attend = false; barre.style.setProperty("--lu", (scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4)); };
+  addEventListener("scroll", () => { if (!attend) { attend = true; requestAnimationFrame(suit); } }, {passive: true});
+  addEventListener("resize", suit); suit();
+})();
+</script>
+</div>
+
+<script>
+document.documentElement.lang = "fr";
+/* Le simulateur : un seul calcul, refait à chaque nombre modifié. 45 semaines travaillées, 8 heures par jour. */
+(() => {
+  const z = id => document.getElementById(id), zone = document.querySelector(".s-zone");
+  const SEM = 45, JOUR = 8, AN = SEM * 5, G = {rep: 1 - 1 / 1.15, vente: 0.25, recr: 0.20, mkt: 0.40};
+  const lit = id => { const v = parseFloat(String(z(id).value).replace(",", ".")); return isFinite(v) && v > 0 ? v : 0; };
+  const fr = (n, d = 0) => n.toLocaleString("fr-FR", {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/ /g, " ");
+  const cases = [...z("cases").children], lignes = [...z("legende").querySelectorAll("b")], NOMS = ["Réponses clients", "Vente", "Recrutement", "Marketing"];
+  const barres = [...zone.querySelectorAll(".barre")];
+  const calme = matchMedia("(prefers-reduced-motion: reduce)").matches; let affiche = null, fil = null;
+  cases.forEach((c, k) => c.style.setProperty("--k", k));
+  /* le grand nombre ne saute pas d'une valeur à l'autre : il compte */
+  const compte = vers => {
+    cancelAnimationFrame(fil); if (calme || affiche === null) { affiche = vers; z("r-jours").textContent = fr(vers); return; }
+    const de = affiche, t0 = performance.now(); const pas = t => { const u = Math.min(1, (t - t0) / 450), e = 1 - (1 - u) ** 3; affiche = Math.round(de + (vers - de) * e); z("r-jours").textContent = fr(affiche); if (u < 1) fil = requestAnimationFrame(pas); }; fil = requestAnimationFrame(pas);
+  };
+  const calcule = () => {
+    const cout = lit("s-cout");
+    const h = [lit("s-rep") * 40 * SEM * G.rep, lit("s-com") * lit("s-rdv") * SEM * G.vente, lit("s-recr") * SEM * G.recr, lit("s-red") * SEM * G.mkt];
+    /* les totaux sont la somme des lignes arrondies, pour que la légende et le grand nombre tombent toujours juste */
+    const somme = t => t.reduce((a, b) => a + b, 0), parLigne = h.map(x => Math.floor(x / JOUR + .5)), euros = h.map(x => Math.floor(x * cout + .5));
+    const jours = somme(parLigne);
+    compte(jours); z("r-valeur").textContent = fr(somme(euros)) + " €";
+    let k = 0; cases.forEach(c => c.className = "");
+    parLigne.forEach((n, l) => { for (let j = 0; j < n && k < cases.length; j++, k++) cases[k].className = "l" + l; });
+    lignes.forEach((b, l) => b.textContent = fr(parLigne[l]) + " j · " + fr(euros[l]) + " €");
+    z("cases").setAttribute("aria-label", k + " jours colorés sur " + AN + " : " + NOMS.map((n, l) => n + " " + parLigne[l]).join(", ") + ".");
+    /* la jauge (part d'un poste à temps plein) et la barre de répartition */
+    zone.style.setProperty("--pct", Math.min(1, jours / AN).toFixed(3)); z("j-pct").textContent = fr(Math.round(jours / AN * 100)) + " %";
+    barres.forEach(b => [...b.children].forEach((i, l) => i.style.setProperty("--n", parLigne[l])));
+    /* le coût : l'aide est de 70 % du budget, entre 3 000 et 25 000 euros hors taxes */
+    const budget = Math.max(3000, Math.min(25000, lit("s-budget"))), aide = Math.round(budget * .7);
+    z("c-aide").textContent = fr(aide) + " €"; z("c-reste").textContent = fr(budget - aide) + " €";
+  };
+  /* les boutons « moins » et « plus » ; les nombres de personnes, de rendez-vous et d'heures restent entiers */
+  document.querySelectorAll(".compte").forEach(c => {
+    const n = c.querySelector("input"), entier = n.hasAttribute("data-entier"), borne = v => Math.max(+n.min, Math.min(+n.max, v));
+    c.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { const v = lit(n.id) + +b.dataset.d; n.value = borne(entier ? Math.round(v) : Math.round(v * 10) / 10); calcule(); }));
+    n.addEventListener("input", () => { const v = parseFloat(n.value); if (entier && isFinite(v) && !Number.isInteger(v)) n.value = Math.round(v); calcule(); });
+    n.addEventListener("change", () => { const v = parseFloat(String(n.value).replace(",", ".")); n.value = isFinite(v) ? borne(entier ? Math.round(v) : v) : 0; calcule(); });
+  });
+  z("reglages").addEventListener("submit", e => e.preventDefault());
+  calcule();
+})();
+(() => {
+  const a = document.getElementById("courriel"), b = document.getElementById("copier"), ok = document.getElementById("copie-ok");
+  if (!a || !a.textContent.includes("@")) return;
+  a.classList.remove("vide"); b.hidden = false;
+  const repli = () => { const r = document.createRange(); r.selectNodeContents(a); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = "Adresse sélectionnée : copiez-la, puis collez-la dans votre messagerie."; };
+  b.addEventListener("click", () => { if (!navigator.clipboard) return repli(); navigator.clipboard.writeText(a.textContent.trim()).then(() => { ok.textContent = "Adresse copiée. Collez-la dans votre messagerie."; }, repli); });
+})();
+</script>
+
+</body>
+</html>

@@ -237,6 +237,8 @@ h3{font-size:var(--t5);line-height:1.16}
 .fin>*:not(.fond):not(.voile){z-index:1}
 .haut .voile,.citation .voile,.fin .voile,.p-haut .voile{opacity:.5}
 
+/* L'animation d'un pôle : une petite scène isométrique sur fond blanc, sans texte (source/animations/). */
+.p-anim{min-width:0;border:1px solid var(--trait);border-radius:var(--r2);overflow:hidden;background:#fff}
 /* Le trajet d'un pôle : cinq étapes cliquables ; l'IA avance seule jusqu'à l'étape où une personne valide */
 .trajet{--pc:var(--pe);display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--trait);border-radius:var(--r2);background:var(--fond);min-width:0}
 .t-etapes{display:flex;gap:6px}
@@ -360,9 +362,8 @@ h3{font-size:var(--t5);line-height:1.16}
 /* Les retours écrits des entreprises accompagnées : une mise en page de journal, les mots qui comptent se surlignent à la lecture */
 .avis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 64px}
 .avis figure{position:relative;display:flex;flex-direction:column;gap:16px;margin:0;padding-top:34px;border-top:2px solid var(--texte)}
-.avis figure::before{content:"«";position:absolute;right:0;top:-10px;font-family:var(--titre);font-size:120px;line-height:1;color:var(--trait)}
 .avis blockquote{margin:0;font-size:var(--t3);line-height:1.65}
-.avis blockquote b{display:block;margin-bottom:10px;padding-right:86px;font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1.15;letter-spacing:-.012em;text-wrap:balance}
+.avis blockquote b{display:block;margin-bottom:10px;font-family:var(--titre);font-weight:500;font-size:var(--t6);line-height:1.15;letter-spacing:-.012em;text-wrap:balance}
 .avis figcaption{margin-top:auto;padding-top:12px;border-top:1px solid var(--trait);font-size:var(--t1);color:var(--doux)}
 .avis mark{padding:0 2px;color:inherit;background:linear-gradient(rgba(247,176,146,.65),rgba(247,176,146,.65)) no-repeat 0 88%/100% 62%;transition:background-size 1s cubic-bezier(.3,.7,.2,1) .3s}
 .avis mark:nth-of-type(2){transition-delay:.9s}

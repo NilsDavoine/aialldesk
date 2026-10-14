@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<rect width="512" height="512" rx="112" fill="#101820"/>
-<g transform="translate(256 256) scale(1.45) translate(-145 -141)">
-<g fill="none" stroke="#f3f1ec" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M79 176V46a20 20 0 0 1 20-20h59l55 54v96z"/><path d="M158 26v44a10 10 0 0 0 10 10h45"/><rect x="24" y="200" width="242" height="58" rx="29" stroke-width="18"/></g>
-<g fill="#f7b092"><circle cx="78" cy="229" r="9"/><circle cx="145" cy="229" r="9"/><circle cx="212" cy="229" r="9"/></g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title">
+  <title id="title">AiAllDesk</title>
+  <rect width="256" height="256" rx="48" fill="#0c121a"/>
+  <g transform="translate(38.5 41.9) scale(.681)"><g id="symbol"><path fill="#f3f1ec" d="M62 40 H106 L153.2 216 H109.2 L84 122.1 L58.8 216 H14.8 Z M50 148 H148 V128 L188 164 L148 200 V180 H50 Z"/><g fill="#f7b092"><path d="M204 216 V118 A19 19 0 0 1 242 118 V216 Z"/><circle cx="223" cy="62" r="25"/></g></g></g>
 </svg>
